@@ -1,0 +1,17 @@
+<h2>Hello World</h2>   
+<p>   
+  Today is 20th September, Wednesday.  
+  Its very hot
+</p>  
+<p>
+    <p>BOOK</p>
+    <%  Book.all.each do |book| %>
+        <p><%= book.title %></p>
+        <p><%= book.author %></p>
+        <p><%= book.description %></p>
+        <p><%= book.thumbnail %></p>
+        <p><%= book.rating %></p>
+        <p><%= book.price %></p>
+        <br>
+    <% end %>
+</p>

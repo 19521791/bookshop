@@ -1,0 +1,14 @@
+<h2>Hello World</h2>   
+<p>   
+  Today is 20th September, Wednesday.  
+  Its very hot
+</p>  
+<p>
+    <p>USER</p>
+    <% @data.each do |record| %>
+        <p><%= record.name %></p>
+        <p><%= record.password %></p>
+        <p><%= record.email %></p>
+        <p><%= record.mobile %></p>
+    <% end %>
+</p>
