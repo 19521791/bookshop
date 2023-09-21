@@ -5,6 +5,11 @@ Rails.application.routes.draw do
   namespace :api do
     namespace :v1 do
       resources :books
+      namespace :admin do
+        resources :books
+      end
     end
   end
+
+ 
 end
