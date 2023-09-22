@@ -21,4 +21,6 @@
 class BookCategory < ApplicationRecord
     belongs_to :book
     belongs_to :category
+
+    accepts_nested_attributes_for :category
 end

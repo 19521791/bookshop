@@ -1,10 +1,9 @@
 class Api::V1::Admin::BooksController < ApplicationController
-  include V1::Admins::Modules
   before_action :show, only: %i(show)
   skip_before_action :verify_authenticity_token
 
   def index
-      command = query_books.call
+      command = V1::Books::Query.call
 
       if command.success?
           render json: {
@@ -22,7 +21,7 @@ class Api::V1::Admin::BooksController < ApplicationController
 
   def show
       book_id = params[:id]
-      command = query_books.call(book_id)
+      command = V1::Books::Query.call(book_id)
 
       if command.success?
           render json: {
@@ -38,7 +37,7 @@ class Api::V1::Admin::BooksController < ApplicationController
   end
 
   def create 
-      command = create_book.call(book_params)
+      command = V1::Books::Create.call(book_params)
 
       if command.success?
           render json: {
@@ -57,16 +56,16 @@ class Api::V1::Admin::BooksController < ApplicationController
   private 
 
   def book_params
-      params.permit(
-          :title,
-          :author,
-          :description,
-          :thumbnail,
-          :rating,
-          :price,
-          :stock,
-          category_names: [] 
-      )
-  end
+    params.require(:book).permit(
+      :title,
+      :author,
+      :description,
+      :thumbnail,
+      :rating,
+      :price,
+      :stock,
+      book_categories_attributes: [:id, category_attributes: [:name]]
+    )
+  end  
 end
 

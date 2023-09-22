@@ -15,7 +15,9 @@
 #
 class Book < ApplicationRecord
     belongs_to :user, optional: true
-    has_many :book_category
-    has_many :categories, through: :book_category
-    accepts_nested_attributes_for :book_category
+    has_many :book_categories
+    has_many :categories, through: :book_categories
+    accepts_nested_attributes_for :book_categories
+
+    scope :ordered_by_created_at, -> { order(created_at: :desc)}
 end
