@@ -1,13 +1,13 @@
-class QueryBooks
+class V1::Admins::QueryBooks
   prepend SimpleCommand
-
+  attr_reader :book_id
   def initialize(book_id = nil)
     @book_id = book_id
   end
 
   def call
-    if @book_id
-      book = Book.find_by(id: @book_id)
+    if book_id
+      book = Book.find_by(id: book_id)
       return nil unless book
 
       book_data(book)

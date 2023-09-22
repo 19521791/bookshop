@@ -1,3 +1,13 @@
+# == Schema Information
+#
+# Table name: categories
+#
+#  id         :bigint           not null, primary key
+#  name       :string
+#  created_at :datetime         not null
+#  updated_at :datetime         not null
+#  parent_id  :integer
+#
 class Category < ApplicationRecord
     belongs_to :parent, :class_name => 'Category', optional: true
     has_many :children, :class_name => 'Category', :foreign_key => 'parent_id'
