@@ -1,18 +1,19 @@
-class QueryBooks
+class V1::Books::Query
   prepend SimpleCommand
+  attr_reader :book_id
 
   def initialize(book_id = nil)
     @book_id = book_id
   end
 
   def call
-    if @book_id
-      book = Book.find_by(id: @book_id)
+    if book_id
+      book = Book.includes(:categories).find_by(id: book_id)
       return nil unless book
 
       book_data(book)
     else
-      books = Book.order('created_at DESC')
+      books = Book.ordered_by_created_at.includes(:categories)
       books.map { |book| book_data(book) }
     end
   end
