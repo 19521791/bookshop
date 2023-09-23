@@ -2,6 +2,10 @@ class Api::V1::Admin::BooksController < ApplicationController
   before_action :show, only: %i(show)
   skip_before_action :verify_authenticity_token
 
+  def new
+    @book = Book.new
+  end
+
   def index
       command = V1::Books::Query.call
 
@@ -64,7 +68,7 @@ class Api::V1::Admin::BooksController < ApplicationController
       :rating,
       :price,
       :stock,
-      book_categories_attributes: [:id, category_attributes: [:name]]
+      book_categories_attributes: [:id, :category_id]
     )
   end  
 end
