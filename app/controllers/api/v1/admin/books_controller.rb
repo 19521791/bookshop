@@ -57,6 +57,40 @@ class Api::V1::Admin::BooksController < ApplicationController
       end
   end
 
+  def update
+    command = V1::Books::Update.call(book_params, params[:id])
+  
+    if command.success?
+      render json: {
+        status: true,
+        data: command.result
+      }
+    else
+      render json: {
+        status: false,
+        message: 'Error when updating the book',
+        errors: command.errors.full_messages
+      }, status: :unprocessable_entity
+    end
+  end
+
+  def destroy
+    command = V1::Books::Destroy.call(params[:id])
+  
+    if command.success?
+      render json: {
+        status: true,
+        message: 'Book deleted successfully'
+      }
+    else
+      render json: {
+        status: false,
+        message: 'Error when deleting the book',
+        errors: command.errors.full_messages
+      }, status: :unprocessable_entity
+    end
+  end
+
   private 
 
   def book_params
@@ -68,7 +102,7 @@ class Api::V1::Admin::BooksController < ApplicationController
       :rating,
       :price,
       :stock,
-      book_categories_attributes: [:id, :category_id]
+      book_categories_attributes: [:id, :category_id, :_allow_destroy]
     )
   end  
 end
