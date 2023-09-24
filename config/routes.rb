@@ -1,18 +1,11 @@
-# == Route Map
-#
-
 Rails.application.routes.draw do
-  # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
-
-  # Defines the root path route ("/")
   namespace :api do
     namespace :v1 do
       resources :books
       namespace :admin do
-        resources :books
+        post 'create-book', to: 'books#create', as: 'create_book'
+        resources :books, only: [:index, :show, :update, :destroy]
       end
     end
   end
-
- 
 end
