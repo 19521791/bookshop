@@ -21,7 +21,9 @@ class Api::V1::BooksController < ApplicationController
     end
 
     def search
-        command = V1::Books::Search.call(params)
+        type = params[:type]
+        value = params[:value]
+        command = V1::Books::Search.call(type, value)
         handle_respone(command, 'search', 'Error when searching the book')
     end
 end

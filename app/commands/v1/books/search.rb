@@ -1,19 +1,20 @@
 class V1::Books::Search
     prepend SimpleCommand
-    attr_reader :params
+    attr_reader :type, :value
 
-    def initialize(params)
-        @params = params
+    def initialize(type, value)
+        @type = type
+        @value = value
     end
 
     def call
         books = Book.ordered_by_created_at.includes(:categories)
 
-        if params[:name].present?
-            books = books.where("title = :query OR author = :query", query: params[:name])
+        if value.present?
+            books = books.search_by(type, value)
             return books
         else
-            return books.errors
+            return errors.add(:book, 'not') if books.nil?
         end
     end
 end
