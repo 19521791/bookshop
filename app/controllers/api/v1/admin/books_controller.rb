@@ -1,4 +1,6 @@
 class Api::V1::Admin::BooksController < ApplicationController
+
+  include ApiResponse
   before_action :show, only: %i(show)
   skip_before_action :verify_authenticity_token
 
@@ -7,88 +9,29 @@ class Api::V1::Admin::BooksController < ApplicationController
   end
 
   def index
-      command = V1::Books::Query.call
-
-      if command.success?
-          render json: {
-              status: true,
-              data: command.result
-          }, status: :ok
-      else
-          render json: {
-              status: false,
-              message: 'Error when querying the list of books'
-          }, status: :unprocessable_entity
-
-      end
+      command = V1::Books::List.call
+      handle_respone(command, 'list', 'Error when listing books')
   end
 
   def show
       book_id = params[:id]
-      command = V1::Books::Query.call(book_id)
-
-      if command.success?
-          render json: {
-            status: true,
-            data: command.result
-          }, status: :ok
-        else
-          render json: {
-            status: false,
-            message: 'Error when querying the book'
-          }, status: :unprocessable_entity
-      end
+      command = V1::Books::Detail.call(book_id)
+      handle_respone(command, 'details', 'Error when fetching book details')
   end
 
   def create 
       command = V1::Books::Create.call(book_params)
-
-      if command.success?
-          render json: {
-            status: true,
-            data: command.result
-          }, status: :created
-        else
-          render json: {
-            status: false,
-            message: 'Error when creating a new book',
-            errors: command.errors.full_messages
-          }, status: :unprocessable_entity
-      end
+      handle_respone(command, 'create', 'Error when creating a new book')
   end
 
   def update
     command = V1::Books::Update.call(book_params, params[:id])
-  
-    if command.success?
-      render json: {
-        status: true,
-        data: command.result
-      }
-    else
-      render json: {
-        status: false,
-        message: 'Error when updating the book',
-        errors: command.errors.full_messages
-      }, status: :unprocessable_entity
-    end
+    handle_respone(command, 'update', 'Error when updating the book')
   end
 
   def destroy
     command = V1::Books::Destroy.call(params[:id])
-  
-    if command.success?
-      render json: {
-        status: true,
-        message: 'Book deleted successfully'
-      }
-    else
-      render json: {
-        status: false,
-        message: 'Error when deleting the book',
-        errors: command.errors.full_messages
-      }, status: :unprocessable_entity
-    end
+    handle_respone(command, 'destroy', 'Error when deleting the book')
   end
 
   private 

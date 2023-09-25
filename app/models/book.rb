@@ -20,4 +20,8 @@ class Book < ApplicationRecord
     accepts_nested_attributes_for :book_categories, allow_destroy: true
 
     scope :ordered_by_created_at, -> { order(created_at: :desc)}
+    scope :search_by_query, ->(query) {
+    where("title LIKE :query OR author LIKE :query OR EXISTS (SELECT 1 FROM categories WHERE categories.id = books.category_id AND categories.name LIKE :query)", query: "%#{query}")
+    }
+
 end
