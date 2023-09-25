@@ -68,6 +68,8 @@ group :development do
   gem 'annotate'
 
   gem 'pagy'
+
+  gem 'rack-cors', :require => 'rack/cors'
 end
 
 group :test do
