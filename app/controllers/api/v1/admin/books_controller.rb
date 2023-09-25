@@ -9,19 +9,24 @@ class Api::V1::Admin::BooksController < ApplicationController
   end
 
   def index
-      command = V1::Books::List.call
-      handle_respone(command, 'list', 'Error when listing books')
+    page = params[:page] || 1
+    command = V1::Books::List.call(page)
+    books = command.result[:books]
+    render json: {
+      books: command.result,
+      message: 'Books listed successfully'
+    }, status: :ok
   end
 
   def show
-      book_id = params[:id]
-      command = V1::Books::Detail.call(book_id)
-      handle_respone(command, 'details', 'Error when fetching book details')
+    book_id = params[:id]
+    command = V1::Books::Detail.call(book_id)
+    handle_respone(command, 'details', 'Error when fetching book details')
   end
 
   def create 
-      command = V1::Books::Create.call(book_params)
-      handle_respone(command, 'create', 'Error when creating a new book')
+    command = V1::Books::Create.call(book_params)
+    handle_respone(command, 'create', 'Error when creating a new book')
   end
 
   def update

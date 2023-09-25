@@ -1,5 +1,2 @@
-# load the compact UI extra
-# require 'pagy/extras/compact'
-
-# set the default items per page
-# Pagy::VARS[:items] = 10
+require 'pagy/extras/bulma'
+require 'pagy/extras/array'

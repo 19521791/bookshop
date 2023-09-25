@@ -13,7 +13,7 @@ class V1::Books::Search
             books = books.where("title = :query OR author = :query", query: params[:name])
             return books
         else
-            nil
+            return books.errors
         end
     end
 end

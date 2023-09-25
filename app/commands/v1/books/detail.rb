@@ -8,7 +8,7 @@ class V1::Books::Detail
 
     def call
         book = Book.includes(:categories).find_by(id: book_id)
-        return nil unless book
+        return errors.add(:book, 'not found') if book.nil?
 
         book_data(book)
     end
