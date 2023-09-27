@@ -18,12 +18,12 @@ module ApiResponse
         }
     end
 
-    def is_error(message, errors = [], status = :unprocessable_entity)
+    def is_error(message, errors = [])
         render json: {
-            status: status,
+            status: :unprocessable_entity,
             message: message,
             errors: errors
-        }
+        }, status: :unprocessable_entity
     end
 
     def success_status_code(action)

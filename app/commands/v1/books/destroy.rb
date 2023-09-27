@@ -8,11 +8,7 @@ class V1::Books::Destroy
   
     def call
         book = Book.includes(:categories).find_by(id: book_id)
-        if book.destroy
-            return true
-        else
-            return book.errors
-        end
+        book.destroy
     end
   end
   

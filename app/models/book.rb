@@ -21,8 +21,8 @@ class Book < ApplicationRecord
 
     scope :ordered_by_created_at, -> { order(created_at: :desc)}
     
-    scope :search_params, -> (key) {
-      where("title LIKE :key OR author LIKE :key OR categories.name LIKE :key", key: "%#{key}%")
+    scope :search_params, -> (keyword) {
+      where("title LIKE :keyword OR author LIKE :keyword OR categories.name LIKE :keyword", keyword: "%#{keyword}%")
       .joins(:categories)
     }
 

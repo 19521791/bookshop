@@ -10,9 +10,9 @@ class V1::Books::Create
     book = Book.new(params)
 
     if book.save
-      return book
+      BookPresenter.new(book).json_response
     else
-      return book.errors
+      book.errors
     end
   end
 end

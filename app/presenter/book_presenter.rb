@@ -4,7 +4,7 @@ class BookPresenter < BasePresenter
         @book = book
     end
 
-    def response
+    def json_response
         {
             id: book.id,
             title: book.title,

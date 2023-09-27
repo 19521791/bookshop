@@ -7,18 +7,13 @@ class V1::Books::List
     end
 
     def call
-        if keyword
-            books = Book.ordered_by_created_at.includes(:categories)
-            books = books.search_params(keyword)
-        else
-            books = Book.ordered_by_created_at.includes(:categories).page(page_params).per(per_page)
-        end
-        books.map { |book| BookPresenter.new(book).response }
+        books = Book.ordered_by_created_at.search_params(keyword).includes(:categories).page(page_params).per(per_page)
+        books.map { |book| BookPresenter.new(book).json_response }
     end
 
     private
 
     def keyword
-        params[:key]
+        params[:keyword]
     end
 end
