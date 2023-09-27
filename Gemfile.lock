@@ -95,6 +95,8 @@ GEM
     erubi (1.12.0)
     faker (3.2.1)
       i18n (>= 1.8.11, < 2)
+    friendly_id (5.5.0)
+      activerecord (>= 4.0.0)
     globalid (1.2.1)
       activesupport (>= 6.1)
     i18n (1.14.1)
@@ -109,6 +111,18 @@ GEM
     jbuilder (2.11.5)
       actionview (>= 5.0.0)
       activesupport (>= 5.0.0)
+    kaminari (1.2.2)
+      activesupport (>= 4.1.0)
+      kaminari-actionview (= 1.2.2)
+      kaminari-activerecord (= 1.2.2)
+      kaminari-core (= 1.2.2)
+    kaminari-actionview (1.2.2)
+      actionview
+      kaminari-core (= 1.2.2)
+    kaminari-activerecord (1.2.2)
+      activerecord
+      kaminari-core (= 1.2.2)
+    kaminari-core (1.2.2)
     loofah (2.21.3)
       crass (~> 1.0.2)
       nokogiri (>= 1.12.0)
@@ -235,8 +249,10 @@ DEPENDENCIES
   capybara
   debug
   faker
+  friendly_id
   importmap-rails
   jbuilder
+  kaminari
   pagy
   pg (~> 1.1)
   pry-rails

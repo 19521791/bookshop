@@ -69,6 +69,10 @@ group :development do
 
   gem 'pagy'
 
+  gem 'kaminari'
+
+  gem "friendly_id"
+
   gem "bcrypt", "~> 3.1.7"
 
   gem 'pry-rails'
