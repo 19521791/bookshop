@@ -13,6 +13,7 @@ class V1::Books::List
         else
             books = Book.ordered_by_created_at.includes(:categories).page(page_params).per(per_page)
         end
+        books.map { |book| BookPresenter.new(book).response }
     end
 
     private
