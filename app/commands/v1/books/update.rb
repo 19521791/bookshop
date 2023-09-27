@@ -11,9 +11,9 @@ class V1::Books::Update
         book = Book.includes(:categories).find_by(id: book_id)
       if book.update(params)
         update_book_categories(book, params[:book_categories_attributes])
-        return book
+        BookPresenter.new(book).json_response
       else
-        return book.errors
+        book.errors
       end
     end
 
