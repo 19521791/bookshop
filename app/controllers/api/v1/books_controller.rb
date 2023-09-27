@@ -6,8 +6,7 @@ class Api::V1::BooksController < ApplicationController
     
     # GET /api/v1/books
     def index
-        page = params[:page] || 1
-        command = V1::Books::List.call(page)
+        command = V1::Books::List.call(params)
         books = command.result[:books]
         render json: {
         books: command.result,
@@ -17,8 +16,7 @@ class Api::V1::BooksController < ApplicationController
   
     # GET /api/v1/books/:id
     def show
-        book_id = params[:id]
-        command = V1::Books::Detail.call(book_id)
+        command = V1::Books::Detail.call(params)
         handle_respone(command, 'details', 'Error when fetching book details')
     end
 
@@ -26,6 +24,7 @@ class Api::V1::BooksController < ApplicationController
     def search
         type = params[:type]
         value = params[:value]
+
         command = V1::Books::Search.call(type, value)
         handle_respone(command, 'search', 'Error when searching the book')
     end
