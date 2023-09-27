@@ -8,11 +8,6 @@ class V1::Books::Create
 
   def call
     book = Book.new(params)
-
-    if book.save
-      BookPresenter.new(book).json_response
-    else
-      book.errors
-    end
+    book.save ? BookPresenter.new(book).json_response : book.errors
   end
 end
