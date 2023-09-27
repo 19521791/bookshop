@@ -1,22 +1,24 @@
 class V1::Books::List
     prepend SimpleCommand
-    attr_reader :page
-
+    attr_reader :params
+    include Paginatable
     def initialize(params)
-        @page = params.delete(:page)
+        @params = params
     end
 
     def call
-        books = Book.ordered_by_created_at.includes(:categories)
-        pagy = Pagy.new(count: books.count, items: per_page, page: page)
-        books = books.limit(pagy.items).offset(pagy.offset)
-        {
-            books: books.map { |book| BookPresenter.new(book).response },
-            pagy: pagy
-        }
+        if keyword
+            books = Book.ordered_by_created_at.includes(:categories)
+            books = books.search_params(keyword)
+        else
+            books = Book.ordered_by_created_at.includes(:categories).page(page_params).per(per_page)
+        end
+        books.map { |book| BookPresenter.new(book).response }
     end
 
-    def per_page
-        items_per_page = 10
+    private
+
+    def keyword
+        params[:key]
     end
 end

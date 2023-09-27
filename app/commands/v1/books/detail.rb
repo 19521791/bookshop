@@ -1,9 +1,9 @@
 class V1::Books::Detail
     prepend SimpleCommand
-    attr_reader :book_id
+    attr_reader :params
 
     def initialize(params)
-        @book_id = params[:book_id]
+        @params = params
     end
 
     def call
@@ -11,5 +11,11 @@ class V1::Books::Detail
         return errors.add(:book, 'not found') if book.nil?
 
         BookPresenter.new(book).response
+    end
+
+    private
+
+    def book_id
+        params[:book_id]
     end
 end

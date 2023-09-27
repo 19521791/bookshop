@@ -6,19 +6,13 @@ class Api::V1::Admin::BooksController < ApplicationController
 
   # Get /api/v1/admin/books
   def index
-    page = params[:page] || 1
-    command = V1::Books::List.call(page)
-    books = command.result[:books]
-    render json: {
-      books: command.result,
-      message: 'Books listed successfully'
-    }, status: :ok
+    command = V1::Books::List.call(params)
+    handle_respone(command, 'list', 'Error when listing books')
   end
 
   # Get /api/v1/admin/books/:id
   def show
-    book_id = params[:id]
-    command = V1::Books::Detail.call(book_id)
+    command = V1::Books::Detail.call(params)
     handle_respone(command, 'details', 'Error when fetching book details')
   end
 
@@ -43,7 +37,7 @@ class Api::V1::Admin::BooksController < ApplicationController
   private 
 
   def book_params
-    params.permit(
+    params.require(:book).permit(
       :title,
       :author,
       :description,
