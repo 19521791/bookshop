@@ -69,6 +69,10 @@ group :development do
 
   gem 'pagy'
 
+  gem "bcrypt", "~> 3.1.7"
+
+  gem 'pry-rails'
+
   gem 'rack-cors', :require => 'rack/cors'
 end
 

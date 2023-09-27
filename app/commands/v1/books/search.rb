@@ -14,7 +14,10 @@ class V1::Books::Search
             books = books.search_by(type, value)
             return books
         else
-            return errors.add(:book, 'not') if books.nil?
+            return errors.add(:book, 'not found') if books.nil?
         end
+    end
+
+    def type
     end
 end

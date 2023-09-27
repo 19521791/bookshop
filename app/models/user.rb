@@ -14,11 +14,11 @@
 class User < ApplicationRecord
     has_many :books
     has_many :categories
-
+    has_secure_password
     validates :name, presence: true
-    validates :email, presence: true, uniqueness: true, format: { with: /\A[^@\s]+@[^@\s]+\z/ }
+    validates :email, presence: true, uniqueness: true, format: { with: /\A[^@\s]+@[^@\s]+\z/, message: 'Invalid email' }
     validates :mobile, presence: true, format: { with: /\A\d{10}\z/ }
     validates :password, presence: true, length: { minimum: 8 }
 
-    enum role: { customer: 'customer', admin: 'admin'}
+    enum role: { customer: 0, admin: 1}
 end
