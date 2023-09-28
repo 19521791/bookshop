@@ -7,7 +7,7 @@
 #  mobile     :string
 #  name       :string
 #  password   :string
-#  role       :string
+#  role       :integer
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
 #

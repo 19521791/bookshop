@@ -8,8 +8,8 @@ class V1::Books::List
 
     def call
         books = Book.includes(:categories)
+                    .order_by_fields(order_params, order_by)
                     .search_params(keyword)
-                    .ordered_by_created_at
                     .page(page_params)
                     .per(per_page)
         {
@@ -22,5 +22,13 @@ class V1::Books::List
 
     def keyword
         params[:keyword]
+    end
+
+    def order_params
+        params[:order].present? ? params[:order].split(',') : []
+    end
+
+    def order_by
+        params[:order_by].to_s.downcase
     end
 end

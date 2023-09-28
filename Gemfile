@@ -75,6 +75,8 @@ group :development do
 
   gem "bcrypt", "~> 3.1.7"
 
+  gem 'jwt'
+
   gem 'pry-rails'
 
   gem 'rack-cors', :require => 'rack/cors'
