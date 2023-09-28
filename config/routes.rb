@@ -1,4 +1,7 @@
 Rails.application.routes.draw do
+  get 'users/index'
+  get 'users/new'
+  get 'users/create'
   namespace :api do
     namespace :v1 do
       get '/books/:book_id', to: 'books#show'
