@@ -12,7 +12,7 @@ module Paginable
     def pagination(records)
         {
             page: records.current_page,
-            size: records.limit_value,
+            per_page: records.limit_value,
             prev_page: records.prev_page,
             next_page: records.next_page,
             total_page: records.total_pages,
