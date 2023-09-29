@@ -2,14 +2,16 @@
 #
 # Table name: users
 #
-#  id         :bigint           not null, primary key
-#  email      :string
-#  mobile     :string
-#  name       :string
-#  password   :string
-#  role       :integer
-#  created_at :datetime         not null
-#  updated_at :datetime         not null
+#  id              :bigint           not null, primary key
+#  email           :string
+#  firstname       :string
+#  lastname        :string
+#  mobile          :string
+#  name            :string
+#  password_digest :string
+#  role            :integer
+#  created_at      :datetime         not null
+#  updated_at      :datetime         not null
 #
 class User < ApplicationRecord
     has_many :books

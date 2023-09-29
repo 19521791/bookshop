@@ -27,7 +27,7 @@ module ApiResponse
     end
 
     def success_status_code(action)
-      if action == 'create'
+      if action == 'create' || action == 'register'
         :created
       elsif action == 'destroy'
         :no_content
