@@ -30,7 +30,7 @@ Rails.application.routes.draw do
 
         post '/register', to: 'admins#register'
 
-        get '/customers', to: 'admins#index'
+        get '/', to: 'admins#index'
 
         get '/customers/:customer_id', to: 'admins#show'
 

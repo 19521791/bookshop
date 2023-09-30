@@ -8,7 +8,7 @@ class V1::Users::Register
 
   def call
     user = User.new( user_params )
-    if user.valid?
+    if user.valid? 
       user.save
       UserPresenter.new(user).json_response
     else

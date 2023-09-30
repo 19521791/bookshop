@@ -2,7 +2,9 @@ class Api::V1::Admin::AdminsController < ApplicationController
 
   include ApiResponse
   include UserParams
+  include CheckRole
   skip_before_action :verify_authenticity_token
+  before_action :check_role, only: [:register]
 
   def login
     render json: {
