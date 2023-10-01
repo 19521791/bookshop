@@ -1,4 +1,4 @@
-module UserParams
+module BaseParams
   extend ActiveSupport::Concern
 
   def user_params
@@ -18,4 +18,17 @@ module UserParams
       :password
     )
   end
+
+  def book_params
+    params.permit(
+      :title,
+      :author,
+      :description,
+      :thumbnail,
+      :rating,
+      :price,
+      :stock,
+      book_categories_attributes: [:id, :category_id, :_allow_destroy]
+    )
+  end  
 end
