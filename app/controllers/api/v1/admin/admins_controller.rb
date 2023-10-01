@@ -1,43 +1,29 @@
-class Api::V1::Admin::AdminsController < ApplicationController
+class Api::V1::Admin::AdminsController < BaseUsersController
 
-  include ApiResponse
-  include BaseParams
   include CheckRole
-
-  skip_before_action :verify_authenticity_token
   before_action :check_role_admin, only: [:register, :login]
-  before_action :authenticate, only: [:index, :show, :update, :destroy]
 
   def login
-    command = V1::Users::Login.call(auth_params)
-    handle_respone(command, 'login', 'Error when trying to login')
+    super
   end
 
   def register
-    command = V1::Users::Register.call(user_params)
-    handle_respone(command, 'register', 'Error when creating a new user')
+    super
   end
 
   def index
-    command = V1::Users::List.call(params)
-    handle_respone(command, 'list', 'Error when listing users')
+    super
   end
 
   def show
-    render json: {
-      message: 'customers/:id'
-    }
+    super
   end
 
   def update
-    render json: {
-      message: 'update'
-    }
+    super
   end
 
   def destroy
-    render json: {
-      message: 'destroy'
-    }
+    super
   end
 end

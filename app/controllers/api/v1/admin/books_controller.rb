@@ -1,4 +1,5 @@
 class Api::V1::Admin::BooksController < BaseBooksController
+  before_action :authenticate, only: [:create, :update, :destroy]
 
   # Get /api/v1/admin/books
   def index
