@@ -5,12 +5,7 @@ class ApplicationController < ActionController::Base
   end
 
   def current_user
-    if auth_present?
-      user = User.find(auth["user"])
-      if user
-        @current_user ||= user
-      end
-    end
+    @current_user ||= User.find_by(id: decoded_user_id)
   end
 
   def authenticate
@@ -20,16 +15,21 @@ class ApplicationController < ActionController::Base
   private
 
   def token
-    request.env["HTTP_AUTHORIZATION"].scan(/Bearer 
-      (.*)$/).flatten.last
+    authorization_header = request.headers["Authorization"]
+    if authorization_header && authorization_header.start_with?("Bearer ")
+      authorization_header.split("Bearer ")[1]
+    end
   end
+
   def auth
-    Auth.decode(token)
+    access_token = token
+    if access_token
+      Auth.decode(access_token)
+    end
   end
 
-  def auth_present?
-    !!request.env.fetch("HTTP_AUTHORIZATION", 
-      "").scan(/Bearer/).flatten.first
+  def decoded_user_id
+    decoded_data = auth
+    decoded_data["user_id"] if decoded_data
   end
-
 end
