@@ -1,7 +1,9 @@
 class Api::V1::CustomersController < ApplicationController
   include ApiResponse
   include UserParams
+  include CheckRole
   skip_before_action :verify_authenticity_token
+  before_action :check_role_customer, only: [:login, :register]
 
   def login
     command = V1::Users::Login.call(auth_params)

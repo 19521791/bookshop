@@ -1,7 +1,5 @@
 class ApplicationController < ActionController::Base
 
-  # before_action :authenticate 
-
   def logged_in?
     !!current_user
   end
@@ -22,16 +20,14 @@ class ApplicationController < ActionController::Base
   private
 
   def token
-    request.env["HTTP_AUTHORIZATION"].scan(/Bearer 
-      (.*)$/).flatten.last
+    request.env["HTTP_AUTHORIZATION"].scan(/Bearer(.*)$/).flatten.last
   end
   def auth
     Auth.decode(token)
   end
 
   def auth_present?
-    !!request.env.fetch("HTTP_AUTHORIZATION", 
-      "").scan(/Bearer/).flatten.first
+    !!request.env.fetch("HTTP_AUTHORIZATION","").scan(/Bearer/).flatten.first
   end
 
 end
