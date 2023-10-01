@@ -1,7 +1,5 @@
 class ApplicationController < ActionController::Base
 
-  # before_action :authenticate 
-
   def logged_in?
     !!current_user
   end

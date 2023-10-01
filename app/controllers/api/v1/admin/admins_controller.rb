@@ -3,8 +3,10 @@ class Api::V1::Admin::AdminsController < ApplicationController
   include ApiResponse
   include UserParams
   include CheckRole
+
   skip_before_action :verify_authenticity_token
-  before_action :check_role, only: [:register]
+  before_action :check_role_admin, only: [:register, :login]
+  before_action :authenticate, only: [:index, :show, :update, :destroy]
 
   def login
     command = V1::Users::Login.call(auth_params)
