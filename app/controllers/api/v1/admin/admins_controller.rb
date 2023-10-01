@@ -7,9 +7,8 @@ class Api::V1::Admin::AdminsController < ApplicationController
   before_action :check_role, only: [:register]
 
   def login
-    render json: {
-      message: 'login'
-    }
+    command = V1::Users::Login.call(auth_params)
+    handle_respone(command, 'login', 'Error when trying to login')
   end
 
   def register

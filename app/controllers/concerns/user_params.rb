@@ -11,4 +11,11 @@ module UserParams
       :mobile
     )
   end
+
+  def auth_params
+    params.permit(
+      :email,
+      :password
+    )
+  end
 end
