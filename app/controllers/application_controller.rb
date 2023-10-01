@@ -27,7 +27,7 @@ class ApplicationController < ActionController::Base
       Auth.decode(access_token)
     end
   end
-
+  
   def decoded_user_id
     decoded_data = auth
     decoded_data["user_id"] if decoded_data
