@@ -1,7 +1,7 @@
 class Api::V1::Admin::AdminsController < ApplicationController
 
   include ApiResponse
-  include UserParams
+  include BaseParams
   include CheckRole
 
   skip_before_action :verify_authenticity_token
