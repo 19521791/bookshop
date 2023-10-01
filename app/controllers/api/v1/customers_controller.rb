@@ -1,13 +1,11 @@
 class Api::V1::CustomersController < ApplicationController
-
+  include ApiResponse
   include UserParams
-  include RoleCheckable
   skip_before_action :verify_authenticity_token
 
   def login
-    render json: {
-      message: 'login'
-    }
+    command = V1::Users::Login.call(auth_params)
+    handle_respone(command, 'login', 'Error when trying to login')
   end
 
   def register

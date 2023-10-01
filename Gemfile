@@ -77,6 +77,8 @@ group :development do
 
   gem 'jwt'
 
+  gem 'dotenv-rails'
+
   gem 'pry-rails'
 
   gem 'rack-cors', :require => 'rack/cors'
