@@ -4,7 +4,7 @@ class BaseUsersController < ApplicationController
   include BaseParams
   
   skip_before_action :verify_authenticity_token
-  before_action :authenticate, only: [:index, :show, :update, :destroy]
+  before_action :authenticate, only: [:show, :update, :destroy]
   
   def login
     command = V1::Users::Login.call(auth_params)
@@ -22,9 +22,8 @@ class BaseUsersController < ApplicationController
   end
 
   def show
-    render json: {
-      message: 'customers/:id'
-    }
+    command = V1::Users::Detail.call(params)
+    handle_respone(command, 'detail', 'Error when fetching user details')
   end
 
   def update

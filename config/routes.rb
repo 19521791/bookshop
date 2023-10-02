@@ -10,11 +10,11 @@ Rails.application.routes.draw do
 
       post '/customers/register', to: 'customers#register'
 
-      get '/customers/:customer_id', to: 'customers#show'
+      get '/customers/:user_id', to: 'customers#show'
 
-      put '/customers/:customer_id', to: 'customers#update'
+      put '/customers/:user_id', to: 'customers#update'
 
-      delete 'customers/:customer_id', to: 'customers#destroy'
+      delete 'customers/:user_id', to: 'customers#destroy'
 
       resources :customers
 
@@ -32,11 +32,11 @@ Rails.application.routes.draw do
 
         get '/', to: 'admins#index'
 
-        get '/customers/:customer_id', to: 'admins#show'
+        get '/:user_id', to: 'admins#show'
 
-        put '/customers/:customer_id', to: 'admins#update'
+        put '/:user_id', to: 'admins#update'
 
-        delete 'customers/:customer_id', to: 'admins#destroy'
+        delete '/:user_id', to: 'admins#destroy'
       end
     end
   end
