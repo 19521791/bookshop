@@ -8,12 +8,14 @@ class V1::Users::Destroy
   end
 
   def call
-      user = User.find_by(id: user_id)
-      if current_user.id == user.id 
-        user.destroy 
-      else
-        errors.add(:user, 'Access denied')
-      end
+    user = User.find_by(id: user_id)
+    if user.nil?
+      errors.add(:user, 'not found')
+    elsif current_user.id == user.id
+      user.destroy
+    else
+      errors.add(:user, 'Access denied. You can only delete your own data.') 
+    end
   end
 
   private
