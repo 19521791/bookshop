@@ -30,5 +30,5 @@ module BaseParams
       :stock,
       book_categories_attributes: [:id, :category_id, :_allow_destroy]
     )
-  end  
+  end
 end
