@@ -14,7 +14,7 @@ class V1::Books::List
                     .per(per_page)
         {
             records: books.map { |book| BookPresenter.new(book).json_response },
-            pagy: pagination(books)
+            pagination: pagination(books)
         }
     end
 

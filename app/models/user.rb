@@ -23,4 +23,28 @@ class User < ApplicationRecord
     validates :password, presence: true, length: { minimum: 8 }
 
     enum role: { customer: 0, admin: 1}
+
+    scope :search_params, -> (keyword) {
+    if keyword.present?
+      keyword.split(',').reduce(all) do |query, key|
+        query.where("firstname LIKE :key OR lastname LIKE :key", key: "%#{key}%")
+      end
+    else
+      all
+    end
+  }
+
+  scope :order_by_fields, ->(order_fields, order_by) {
+    if order_fields.present?
+      order_params = order_fields.map do |order_field|
+        direction = order_by == 'asc' ? 'asc' : 'desc'
+        "#{order_field} #{direction}"
+      end
+      order(order_params.join(', '))
+    else
+      order(created_at: :desc)
+    end
+  }
+
+  scope :filtered_role, ->(flag) { where( role: flag == 1 ? "admin" : "customer")}
 end
