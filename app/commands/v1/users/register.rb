@@ -8,14 +8,12 @@ class V1::Users::Register
 
   def call
     user = User.new( user_params )
-    if user.valid? 
-      user.save
-      UserPresenter.new(user).json_response
-    else
-      user.errors.full_messages.each do |message|
-        errors.add(:base, message) 
-      end
-    end 
+    
+    return errors.add(:base, user.errors.full_messages) unless user.valid?
+    
+    user.save
+    
+    UserPresenter.new(user).json_response
   end
 
   private

@@ -9,17 +9,14 @@ class V1::Users::Update
 
   def call
     user = User.find_by(id: user_id)
-    if user.nil?
-      errors.add(:user, 'not found')
-    elsif current_user.id == user.id
-      if user.update(user_params)
-        UserPresenter.new(user).json_response
-      else
-        errors.add(:user, 'not found')
-      end
-    else
-      errors.add(:user, 'Access denied. You can only update your own data.') 
-    end
+    
+    return errors.add(:user, 'not found') if user.nil?
+
+    return errors.add(:user, 'Access denied. You can only update your own data.') if current_user.id != user.id
+
+    return errors.add(:user, 'not found') unless user.update(user_params)
+    
+    UserPresenter.new(user).json_response
   end
 
   private

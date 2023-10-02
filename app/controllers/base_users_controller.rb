@@ -22,7 +22,7 @@ class BaseUsersController < ApplicationController
   end
 
   def show
-    command = V1::Users::Detail.call(params)
+    command = V1::Users::Detail.call(params, current_user)
     handle_respone(command, 'detail', 'Error when fetching user details')
   end
 

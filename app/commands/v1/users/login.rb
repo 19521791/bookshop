@@ -10,11 +10,9 @@ class V1::Users::Login
   def call
     user = User.find_by(email: params[:email])
 
-    if user && user.authenticate(params[:password])
-      generate_token(user)
-    else
-      errors.add :authentication, 'invalid email or password'
-    end
+    return errors.add :authentication, 'invalid email or password' unless user && user.authenticate(params[:password])
+    
+    generate_token(user)
   end
 
 end
