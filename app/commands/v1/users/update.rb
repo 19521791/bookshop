@@ -1,25 +1,19 @@
 class V1::Users::Update
   prepend SimpleCommand
-  attr_reader :params, :decoded_user_id
+  attr_reader :params, :current_user
 
-  def initialize(params, decoded_user_id)
+  def initialize(params, current_user)
     @params = params
-    @decoded_user_id = decoded_user_id
+    @current_user = current_user
   end
 
   def call
-    if user_id == decoded_user_id
-
-      user = User.find_by(id: user_id)
-
+    user = User.find_by(id: user_id)
+    if current_user.id == user.id
       if user.update(user_params)
-
         UserPresenter.new(user).json_response
-
       else
-
-        errors.add(:user, 'not found') if user.nil?
-
+        errors.add(:user, 'not found')
       end
     else
       errors.add(:user, 'Access denied. You can only update your own data.') 

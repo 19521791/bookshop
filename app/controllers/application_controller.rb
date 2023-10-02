@@ -12,10 +12,6 @@ class ApplicationController < ActionController::Base
     render json: { error: "unauthorized" }, status: 401 unless logged_in?
   end
 
-  def get_decoded_user_id
-    decoded_user_id
-  end
-
   private
 
   def token
