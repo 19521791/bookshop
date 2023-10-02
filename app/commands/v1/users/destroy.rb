@@ -1,14 +1,19 @@
 class V1::Users::Destroy
   prepend SimpleCommand
-  attr_reader :params
+  attr_reader :params, :current_user
 
-  def initialize(params)
+  def initialize(params, current_user)
     @params = params
+    @current_user = current_user
   end
 
   def call
       user = User.find_by(id: user_id)
-      user ? user.destroy : errors.add(:user, 'not found')
+      if current_user.id == user.id 
+        user.destroy 
+      else
+        errors.add(:user, 'Access denied')
+      end
   end
 
   private
