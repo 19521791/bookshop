@@ -1,9 +1,10 @@
 class V1::Users::Detail
   prepend SimpleCommand
-  attr_reader :params
+  attr_reader :params, :current_user
 
-  def initialize(params)
+  def initialize(params, current_user)
     @params = params
+    @current_user = current_user
   end
 
   def call
@@ -11,7 +12,10 @@ class V1::Users::Detail
 
     return errors.add(:user, 'not found') if user.nil?
 
+    return errors.add(:user, 'Access denied') if current_user.id != user.id
+
     UserPresenter.new(user).json_response
+    
   end
 
   private
