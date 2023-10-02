@@ -9,7 +9,9 @@ class V1::Users::Update
 
   def call
     user = User.find_by(id: user_id)
-    if current_user.id == user.id
+    if user.nil?
+      errors.add(:user, 'not found')
+    elsif current_user.id == user.id
       if user.update(user_params)
         UserPresenter.new(user).json_response
       else
