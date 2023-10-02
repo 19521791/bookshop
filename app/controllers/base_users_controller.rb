@@ -27,14 +27,12 @@ class BaseUsersController < ApplicationController
   end
 
   def update
-    render json: {
-      message: 'update'
-    }
+    command = V1::Users::Update.call(params, get_decoded_user_id)
+    handle_respone(command, 'update', 'Error when updating the user')
   end
 
   def destroy
-    render json: {
-      message: 'destroy'
-    }
+    command = V1::Users::Destroy.call(params)
+    handle_respone(command, 'destroy', 'Error when deleting the user ')
   end
 end
