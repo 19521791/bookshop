@@ -2,15 +2,17 @@
 #
 # Table name: categories
 #
-#  id         :bigint           not null, primary key
-#  name       :string
-#  created_at :datetime         not null
-#  updated_at :datetime         not null
-#  parent_id  :integer
+#  id               :bigint           not null, primary key
+#  categorable_type :string
+#  name             :string
+#  created_at       :datetime         not null
+#  updated_at       :datetime         not null
+#  categorable_id   :integer
+#  parent_id        :integer
 #
-class Category < ApplicationRecord
-    belongs_to :parent, :class_name => 'Category', optional: true
-    has_many :children, :class_name => 'Category', :foreign_key => 'parent_id'
+class Category < ApplicationRecord  
+    belongs_to :categorable, polymorphic: true
+    has_many :sub_categories, as: :categorable, class_name: 'Category', dependent: :destroy
     has_many :book_categories
     has_many :books, through: :book_categories
 

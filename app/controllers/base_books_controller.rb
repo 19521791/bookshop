@@ -3,7 +3,8 @@ class BaseBooksController < ApplicationController
   include ApiResponse
   include BaseParams
   skip_before_action :verify_authenticity_token
-
+  before_action :authenticate, only: [:create, :update, :destroy]
+  
   def index
     command = V1::Books::List.call(params)
     handle_respone(command, 'list', 'Error when listing books')
@@ -15,7 +16,7 @@ class BaseBooksController < ApplicationController
   end
 
   def create 
-    command = V1::Books::Create.call(book_params)
+    command = V1::Books::Create.call(book_params, current_user)
     handle_respone(command, 'create', 'Error when creating a new book')
   end
 

@@ -10,6 +10,15 @@ module CheckRole
     end
   end
 
+  def check_role
+    user = User.find_by(email: current_user.email)
+    if user
+      user.role == "admin" ? (return) : (render_error)
+    else
+      user_params[:role] == 1 ? (return) : (render_error)
+    end
+  end
+
   def check_role_customer
     user_params[:role] == 1 ? (render_error) : (return)
   end

@@ -8,14 +8,15 @@ class V1::Users::List
   end
   
   def call
-      users = User.order_by_fields(order_params, order_by)
-                  .search_params(keyword)
-                  .page(page_params)
-                  .per(per_page)
-                  .filtered_role(flag)
+      @users ||= User.search_params(keyword)
+                    .filtered_role(flag)
+                    .order_by_fields(order_params, order_by)
+                    .page(page_params)
+                    .per(per_page)
+                  
       {
-          records: users.map { |user| UserPresenter.new(user).json_response },
-          pagination: pagination(users)
+          records: @users.map { |user| UserPresenter.new(user).json_response },
+          pagination: pagination(@users)
       }
   end
 
@@ -34,6 +35,6 @@ class V1::Users::List
     end
 
     def flag
-        params[:flag]
+        params[:role]
     end
 end

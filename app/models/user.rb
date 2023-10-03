@@ -17,7 +17,8 @@ class User < ApplicationRecord
     has_many :books
     has_many :categories
     has_secure_password
-    validates :name, presence: true
+    validates :firstname, presence: true, format: { with: /\A[a-zA-Z]+\z/i, message: 'Invalid characters in firstname' }
+    validates :lastname, presence: true, format: { with: /\A[a-zA-Z]+\z/, message: 'Invalid characters in lastname' }
     validates :email, presence: true, uniqueness: true, format: { with: /\A[^@\s]+@[^@\s]+\z/, message: 'Invalid email' }
     validates :mobile, presence: true, format: { with: /\A\d{10}\z/ }
     validates :password, presence: true, length: { minimum: 8 }
@@ -25,7 +26,7 @@ class User < ApplicationRecord
     enum role: { customer: 0, admin: 1}
 
     scope :search_params, -> (keyword) {
-    if keyword.present?
+    query = if keyword.present?
       keyword.split(',').reduce(all) do |query, key|
         query.where("firstname LIKE :key OR lastname LIKE :key", key: "%#{key}%")
       end
@@ -46,5 +47,5 @@ class User < ApplicationRecord
     end
   }
 
-  scope :filtered_role, ->(flag) { where( role: flag == 1 ? "admin" : "customer")}
+  scope :filtered_role, ->(flag) { where( role: flag == "admin" ? "admin" : "customer")}
 end
