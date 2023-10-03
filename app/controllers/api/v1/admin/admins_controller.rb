@@ -15,13 +15,13 @@ class Api::V1::Admin::AdminsController < BaseUsersController
 
   # GET /api/v1/admin
   def index
-    params[:flag] = 1
+    params[:role] = "admin"
     super
   end
 
   # GET /api/v1/admin/:id
   def show
-    params[:flag] = 1
+    params[:role] = "admin"
     super
   end
 

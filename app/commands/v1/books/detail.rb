@@ -15,6 +15,6 @@ class V1::Books::Detail
     private
 
     def book_id
-        params[:book_id]
+        params[:id]
     end
 end

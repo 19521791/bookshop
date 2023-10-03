@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_09_29_081335) do
+ActiveRecord::Schema[7.0].define(version: 2023_10_03_104024) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -33,6 +33,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_29_081335) do
     t.boolean "stock"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "user_id", null: false
+    t.index ["user_id"], name: "index_books_on_user_id"
   end
 
   create_table "categories", force: :cascade do |t|
@@ -40,6 +42,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_29_081335) do
     t.integer "parent_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "categorable_id"
+    t.string "categorable_type"
   end
 
   create_table "users", force: :cascade do |t|
@@ -56,4 +60,5 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_29_081335) do
 
   add_foreign_key "book_categories", "books"
   add_foreign_key "book_categories", "categories"
+  add_foreign_key "books", "users"
 end

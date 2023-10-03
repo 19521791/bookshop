@@ -22,7 +22,7 @@ class V1::Users::Update
   private
 
   def user_id
-    params[:user_id]
+    params[:id]
   end
 
   def user_params

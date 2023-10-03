@@ -15,13 +15,13 @@ class Api::V1::CustomersController < BaseUsersController
 
   # GET /api/v1/customers
   def index
-    params[:flag] = 0
+    params[:role] = "customers"
     super
   end
 
   # GET /api/v1/customers/:id
   def show
-    params[:flag] = 0
+    params[:role] = "customers"
     super
   end
 

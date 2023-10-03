@@ -8,7 +8,7 @@ class V1::Users::Detail
   end
 
   def call
-    user = User.filtered_role(flag).find_by(id: user_id)
+    user = User.find_by(id: user_id)
 
     return errors.add(:user, 'not found') if user.nil?
 
@@ -21,7 +21,7 @@ class V1::Users::Detail
   private
 
   def user_id
-    params[:user_id]
+    params[:id]
   end
 
   def flag

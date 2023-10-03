@@ -20,6 +20,6 @@ class V1::Users::Destroy
   private
   
   def user_id
-    params[:user_id]
+    params[:id]
   end
 end

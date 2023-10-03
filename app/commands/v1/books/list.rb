@@ -8,10 +8,13 @@ class V1::Books::List
 
     def call
         books = Book.includes(:categories)
-                    .order_by_fields(order_params, order_by)
                     .search_params(keyword)
+                    .order_by_fields(order_params, order_by)
                     .page(page_params)
                     .per(per_page)
+                    
+                    
+                    
         {
             records: books.map { |book| BookPresenter.new(book).json_response },
             pagination: pagination(books)
