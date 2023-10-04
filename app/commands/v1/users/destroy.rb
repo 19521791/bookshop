@@ -10,9 +10,9 @@ class V1::Users::Destroy
   def call
     user = User.find_by(id: user_id)
 
-    return errors.add(:user, 'not found') if user.nil?
+    return errors.add(:user, 'not found') unless user
 
-    return errors.add(:user, 'Access denied') if current_user.id != user.id
+    return errors.add(:user, 'Access denied') unless can_delete_user?(user)
 
     user.destroy
   end
@@ -21,5 +21,14 @@ class V1::Users::Destroy
   
   def user_id
     params[:id]
+  end
+
+  def can_delete_user?(user)
+    if current_user.role == "admin"
+      return false if current_user.id == user.id
+    else 
+      return false if current_user.id != user.id
+    end
+    true
   end
 end

@@ -14,7 +14,11 @@ class BookPresenter < BasePresenter
         rating: book.rating,
         price: book.price,
         stock: book.stock,
-        categories: book.categories.pluck(:name)
+        categories: {
+            book.categories.pluck(:id)
+            book.categories.pluck(:name)
+        }
     }
     end
 end
+
