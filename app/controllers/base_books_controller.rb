@@ -2,9 +2,7 @@ class BaseBooksController < ApplicationController
 
   include ApiResponse
   include BaseParams
-  
-  before_action :authenticate, only: [:create, :update, :destroy]
-  
+    
   def index
     command = V1::Books::List.call(params)
     handle_respone(command, 'list', 'Error when listing books')

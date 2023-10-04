@@ -1,4 +1,4 @@
-class V1::Users::Register
+class V1::Users::Create
   prepend SimpleCommand
   attr_reader :params
 
@@ -25,7 +25,6 @@ class V1::Users::Register
       name: "#{params[:firstname]} #{params[:lastname]}",
       email: params[:email],
       password: params[:password],
-      role: params[:role],
       mobile: params[:mobile]
     }
   end

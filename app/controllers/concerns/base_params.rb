@@ -12,7 +12,7 @@ module BaseParams
     )
   end
 
-  def auth_params
+  def login_params
     params.permit(
       :email,
       :password

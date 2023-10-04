@@ -12,8 +12,6 @@ class V1::Users::Detail
 
     return errors.add(:user, 'not found') if user.nil?
 
-    return errors.add(:user, 'Access denied') if current_user.id != user.id
-
     UserPresenter.new(user).json_response
     
   end
@@ -22,9 +20,5 @@ class V1::Users::Detail
 
   def user_id
     params[:id]
-  end
-
-  def flag
-    params[:role]
   end
 end

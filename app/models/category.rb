@@ -19,6 +19,7 @@
 #  fk_rails_...  (user_id => users.id)
 #
 class Category < ApplicationRecord  
+    belongs_to :user
     belongs_to :categorable, polymorphic: true
     has_many :sub_categories, as: :categorable, class_name: 'Category', dependent: :destroy
     has_many :book_categories
