@@ -16,14 +16,14 @@ class Api::V1::CustomersController < BaseUsersController
   # GET /api/v1/customers
   def index
     # enum role: { customer: 0, admin: 1}
-    params[:role] = "customers"
+    params[:role] = 0
     super
   end
 
   # GET /api/v1/customers/:id
   def show
     # enum role: { customer: 0, admin: 1}
-    params[:role] = "customers"
+    params[:role] = 0
     super
   end
 

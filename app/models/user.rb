@@ -47,5 +47,5 @@ class User < ApplicationRecord
     end
   }
 
-  scope :filtered_role, ->(flag) { where( role: flag == "admin" ? "admin" : "customer")}
+  scope :filtered_role, ->(flag) { where( role: flag == 1 ? "admin" : "customer")}
 end
