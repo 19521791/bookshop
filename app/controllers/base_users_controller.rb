@@ -2,16 +2,14 @@ class BaseUsersController < ApplicationController
 
   include ApiResponse
   include BaseParams
-  
-  before_action :authenticate, only: [:show, :update, :destroy]
-  
+    
   def login
-    command = V1::Users::Login.call(auth_params)
+    command = V1::Users::Login.call(login_params)
     handle_respone(command, 'login', 'Error when trying to login')
   end
 
-  def register
-    command = V1::Users::Register.call(user_params)
+  def create
+    command = V1::Users::Create.call(user_params)
     handle_respone(command, 'register', 'Error when creating a new user')
   end
 

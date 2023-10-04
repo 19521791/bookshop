@@ -6,7 +6,7 @@ Rails.application.routes.draw do
 
       post '/customers/login', to: 'customers#login'
 
-      post '/customers/register', to: 'customers#register'
+      post '/customers/register', to: 'customers#create'
 
       resources :customers, only: [:index, :show, :update, :destroy]
 
@@ -18,7 +18,7 @@ Rails.application.routes.draw do
 
         post '/login', to: 'admins#login'
 
-        post '/register', to: 'admins#register'
+        post '/register', to: 'admins#create'
 
         get '/', to: 'admins#index'
 

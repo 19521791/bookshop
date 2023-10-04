@@ -10,8 +10,12 @@ class ApplicationController < ActionController::Base
     @current_user ||= User.find_by(id: decoded_user_id)
   end
 
-  def authenticate
-    render json: { error: "unauthorized" }, status: 401 unless logged_in?
+  def authenticate_admin?
+    return render_error unless current_user&.admin?
+  end
+
+  def authenticate_customer?
+    return render_error unless current_user&.customer?
   end
 
   private
@@ -33,5 +37,9 @@ class ApplicationController < ActionController::Base
   def decoded_user_id
     decoded_data = decode_token
     decoded_data["user_id"] if decoded_data
+  end
+
+  def render_error
+    render json: { error: 'Access denied.' }, status: :forbidden
   end
 end

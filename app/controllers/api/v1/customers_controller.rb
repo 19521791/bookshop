@@ -1,7 +1,6 @@
 class Api::V1::CustomersController < BaseUsersController
 
-  include CheckRole
-  before_action :check_role_customer, only: [:register]
+  before_action :authenticate_customer, only: [:login, :update, :destroy]
 
   # POST /api/v1/customers/login
   def login
@@ -9,21 +8,17 @@ class Api::V1::CustomersController < BaseUsersController
   end
 
   # POST /api/v1/customers/register
-  def register
+  def create
     super
   end
 
   # GET /api/v1/customers
   def index
-    # enum role: { customer: 0, admin: 1}
-    params[:role] = 0
     super
   end
 
   # GET /api/v1/customers/:id
   def show
-    # enum role: { customer: 0, admin: 1}
-    params[:role] = 0
     super
   end
 
