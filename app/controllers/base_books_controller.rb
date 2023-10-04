@@ -2,7 +2,7 @@ class BaseBooksController < ApplicationController
 
   include ApiResponse
   include BaseParams
-  skip_before_action :verify_authenticity_token
+  
   before_action :authenticate, only: [:create, :update, :destroy]
   
   def index

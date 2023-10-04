@@ -8,13 +8,15 @@ class V1::Books::Update
     end
   
     def call
-        book = Book.includes(:categories).find_by(id: book_id)
-      if book.update(params)
-        update_book_categories(book, params[:book_categories_attributes])
-        BookPresenter.new(book).json_response
-      else
-        book.errors
-      end
+      book = Book.includes(:categories).find_by(id: book_id)
+
+      return errors.add(:book, 'not found') unless book
+
+      return book.errors unless book.update(params)
+      
+      update_book_categories(book, params[:book_categories_attributes])
+
+      BookPresenter.new(book).json_response
     end
 
     private 

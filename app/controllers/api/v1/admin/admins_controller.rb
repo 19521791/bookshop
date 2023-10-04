@@ -15,12 +15,14 @@ class Api::V1::Admin::AdminsController < BaseUsersController
 
   # GET /api/v1/admin
   def index
-    params[:role] = "admin"
+    # enum role: { customer: 0, admin: 1}
+    params[:role] = 1
     super
   end
 
   # GET /api/v1/admin/:id
   def show
+    # enum role: { customer: 0, admin: 1}
     params[:role] = "admin"
     super
   end

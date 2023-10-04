@@ -7,7 +7,7 @@ class V1::Books::Destroy
     end
   
     def call
-        book = Book.includes(:categories).find_by(id: book_id)
+        book = Book.find_by(id: book_id)
         book ? book.destroy : errors.add(:book, 'not found')
     end
   end

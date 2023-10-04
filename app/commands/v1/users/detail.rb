@@ -25,6 +25,6 @@ class V1::Users::Detail
   end
 
   def flag
-    params[:flag]
+    params[:role]
   end
 end
