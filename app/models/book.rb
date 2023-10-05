@@ -3,30 +3,22 @@
 # Table name: books
 #
 #  id          :bigint           not null, primary key
-#  author      :string
+#  author      :string           not null
 #  description :text
-#  price       :decimal(, )
+#  price       :decimal(, )      not null
 #  rating      :float
 #  stock       :boolean
 #  thumbnail   :string
-#  title       :string
+#  title       :string           not null
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null
-#  user_id     :bigint           not null
-#
-# Indexes
-#
-#  index_books_on_user_id  (user_id)
-#
-# Foreign Keys
-#
-#  fk_rails_...  (user_id => users.id)
 #
 class Book < ApplicationRecord
   belongs_to :user, optional: true
   has_many :book_categories, dependent: :destroy
   has_many :categories, through: :book_categories
   accepts_nested_attributes_for :book_categories, allow_destroy: true
+
   
   scope :search_params, -> (keyword) {
     if keyword.present?

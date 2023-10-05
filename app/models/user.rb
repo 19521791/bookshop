@@ -3,12 +3,11 @@
 # Table name: users
 #
 #  id              :bigint           not null, primary key
-#  email           :string
-#  firstname       :string
-#  lastname        :string
+#  email           :string           not null
+#  first_name      :string           not null
+#  last_name       :string           not null
 #  mobile          :string
-#  name            :string
-#  password_digest :string
+#  password_digest :string           not null
 #  role            :integer          default("customer"), not null
 #  created_at      :datetime         not null
 #  updated_at      :datetime         not null
@@ -17,8 +16,8 @@ class User < ApplicationRecord
     has_many :books
     has_many :categories
     has_secure_password
-    validates :firstname, presence: true, format: { with: /\A[a-zA-Z]+\z/i, message: 'Invalid characters in firstname' }
-    validates :lastname, presence: true, format: { with: /\A[a-zA-Z]+\z/, message: 'Invalid characters in lastname' }
+    validates :first_name, presence: true, format: { with: /\A[a-zA-Z]+\z/i, message: 'Invalid characters in firstname' }
+    validates :last_name, presence: true, format: { with: /\A[a-zA-Z]+\z/, message: 'Invalid characters in lastname' }
     validates :email, presence: true, uniqueness: true, format: { with: /\A[^@\s]+@[^@\s]+\z/, message: 'Invalid email' }
     validates :mobile, presence: true, format: { with: /\A\d{10}\z/ }
     validates :password, presence: false

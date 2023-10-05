@@ -16,11 +16,9 @@ class V1::Categories::List
     private
 
     def categories
-        categories = Category.search_params(keyword)
-                            .order_by_fields(order_params, order_by)
-                            .page(page_params)
+        categories = Category.page(page_params)
                             .per(per_page)
-                    
+    end             
 
     def keyword
         params[:keyword]

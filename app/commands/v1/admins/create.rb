@@ -20,9 +20,8 @@ class V1::Admins::Create
 
   def user_params
     {
-      firstname: params[:firstname], 
-      lastname: params[:lastname], 
-      name: "#{params[:firstname]} #{params[:lastname]}",
+      first_name: params[:first_name], 
+      last_name: params[:last_name], 
       email: params[:email],
       password: params[:password],
       mobile: params[:mobile]

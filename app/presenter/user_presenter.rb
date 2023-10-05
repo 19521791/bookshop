@@ -8,7 +8,7 @@ class UserPresenter < BasePresenter
   def json_response
   {
     id: user.id,
-    username: user.name,
+    username: "#{user.first_name} #{user.last_name}",
     email: user.email,
     role: user.role,
     mobile: user.mobile

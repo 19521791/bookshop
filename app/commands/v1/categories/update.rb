@@ -11,7 +11,7 @@ class V1::Categories::Update
 
       return errors.add(:category, 'not found') unless category
 
-      return category.errors unless category.update(params)
+      return category.errors unless category.update(category_params)
       
       CategoryPresenter.new(category).json_response
     end
@@ -20,6 +20,10 @@ class V1::Categories::Update
 
     def category_id
       params[:id]
+    end
+
+    def category_params
+      params.permit(:name, categories_attributes: [:name])
     end
       
   end

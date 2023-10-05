@@ -8,7 +8,7 @@ class V1::Categories::Create
   end
 
   def call
-    category = Category.new(category_params.merge(user_id: current_user.id))
+    category = Category.new(category_params)
     category.save ? CategoryPresenter.new(category).json_response : category.errors
   end
 
