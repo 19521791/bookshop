@@ -4,15 +4,10 @@
 #
 #  id               :bigint           not null, primary key
 #  categorable_type :string
-#  name             :string
+#  name             :string           not null
 #  created_at       :datetime         not null
 #  updated_at       :datetime         not null
 #  categorable_id   :integer
-#  user_id          :bigint           not null
-#
-# Indexes
-#
-#  index_categories_on_user_id  (user_id)
 #
 require "test_helper"
 

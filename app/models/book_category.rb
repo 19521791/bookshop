@@ -21,4 +21,6 @@
 class BookCategory < ApplicationRecord
     belongs_to :book
     belongs_to :category
+    # validates_associated :book_categoriess
+    # validates_inclusion_of :category_id, in: ->(book) { Category.pluck(:id) }
 end

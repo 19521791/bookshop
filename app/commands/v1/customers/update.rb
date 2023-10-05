@@ -16,8 +16,8 @@ class V1::Customers::Update
   
     user.assign_attributes(user_params)
   
-    if user.valid?
-      user.save
+    if user.save
+      
       UserPresenter.new(user).json_response
     else
       errors.add(:user, user.errors.full_messages)
@@ -37,7 +37,6 @@ class V1::Customers::Update
       lastname: params[:lastname], 
       name: "#{params[:firstname]} #{params[:lastname]}",
       email: params[:email],
-      password: params[:password],
       mobile: params[:mobile]
     }
   end

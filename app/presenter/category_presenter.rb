@@ -5,10 +5,12 @@ class CategoryPresenter < BasePresenter
   end
 
   def json_response
-  {
+    {
       id: category.id,
       name: category.name,
-      sub_categories: category.sub_categories.pluck(:id, :name)
-  }
+      children: category.categories.map do |child|
+        CategoryPresenter.new(child).json_response
+      end
+    }
   end
 end

@@ -8,7 +8,7 @@ class V1::Books::Create
   end
 
   def call
-    book = Book.new(book_params.merge(user_id: current_user.id))
+    book = Book.new(book_params)
     book.save ? BookPresenter.new(book).json_response : book.errors
   end
 

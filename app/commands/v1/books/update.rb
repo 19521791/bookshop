@@ -4,7 +4,6 @@ class V1::Books::Update
   
     def initialize(params)
       @params = params
-      @book_id = book_id
     end
   
     def call
@@ -14,7 +13,7 @@ class V1::Books::Update
 
       return book.errors unless book.update(book_params)
       
-      # update_book_categories(book, params[:book_categories_attributes])
+      update_book_categories(book, book_params[:book_categories_attributes])
 
       BookPresenter.new(book).json_response
     end
@@ -22,9 +21,24 @@ class V1::Books::Update
     private 
 
     def update_book_categories(book, book_categories_params)
-      book.book_categories.destroy_all
-      book.update(book_categories_attributes: params.permit(book_categories_attributes: [:id, :category_id, :_allow_destroy]))
+      existing_category_ids = book.book_categories.pluck(:category_id)
+    
+      new_category_ids = book_categories_params.map { |bc| bc['category_id'].to_i }
+    
+      if existing_category_ids.sort == new_category_ids.sort
+        return 
+      end
+    
+      to_remove = existing_category_ids - new_category_ids
+      to_add = new_category_ids - existing_category_ids
+    
+      book.book_categories.where(category_id: to_remove).destroy_all
+    
+      to_add.each do |category_id|
+        book.book_categories.create(category_id: category_id)
+      end
     end
+    
     
     def book_id
       params[:id]
