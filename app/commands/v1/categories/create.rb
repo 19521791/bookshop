@@ -8,7 +8,7 @@ class V1::Categories::Create
   end
 
   def call
-    category = current_user.categories.new(category_params)
+    category = Category.new(category_params.merge(user_id: current_user.id))
     category.save ? CategoryPresenter.new(category).json_response : category.errors
   end
 
@@ -17,8 +17,7 @@ class V1::Categories::Create
   def category_params
     params.permit(
       :name,
-      :categorable_id,
-      :categorable_type
+      categories_attributes: [:id, :name, :allow_destroy]
     )
   end
 end

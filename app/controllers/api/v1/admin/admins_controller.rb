@@ -1,7 +1,7 @@
 class Api::V1::Admin::AdminsController < ApplicationController
   
   include ApiResponse
-  before_action :authenticate_admin, only: [:show, :update, :destroy, :index]
+  before_action :authenticate_admin, only: [:show, :update, :destroy, :index, :create]
 
   # POST /api/v1/admin/login
   def login

@@ -12,9 +12,9 @@ class V1::Books::Update
 
       return errors.add(:book, 'not found') unless book
 
-      return book.errors unless book.update(params)
+      return book.errors unless book.update(book_params)
       
-      update_book_categories(book, params[:book_categories_attributes])
+      # update_book_categories(book, params[:book_categories_attributes])
 
       BookPresenter.new(book).json_response
     end
@@ -23,11 +23,25 @@ class V1::Books::Update
 
     def update_book_categories(book, book_categories_params)
       book.book_categories.destroy_all
-      book.update(book_categories_attributes: book_categories_params)
+      book.update(book_categories_attributes: params.permit(book_categories_attributes: [:id, :category_id, :_allow_destroy]))
     end
     
     def book_id
       params[:id]
+    end
+
+
+    def book_params
+      params.permit(
+        :title,
+        :author,
+        :description,
+        :thumbnail,
+        :rating,
+        :price,
+        :stock,
+        book_categories_attributes: [:id, :category_id, :_allow_destroy]
+      )
     end
       
   end

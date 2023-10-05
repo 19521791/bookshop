@@ -15,9 +15,9 @@ class V1::Admins::Update
     return errors.add(:user, 'Access denied. You can only update your own data.') if current_user.id != user.id
   
     user.assign_attributes(user_params)
-  
-    if user.valid?
-      user.save
+    binding.pry
+    if user.save
+      
       UserPresenter.new(user).json_response
     else
       errors.add(:user, user.errors.full_messages)
@@ -39,6 +39,6 @@ class V1::Admins::Update
       email: params[:email],
       password: params[:password],
       mobile: params[:mobile]
-    }
+  }.compact
   end
 end

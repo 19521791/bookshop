@@ -14,7 +14,12 @@ class BookPresenter < BasePresenter
         rating: book.rating,
         price: book.price,
         stock: book.stock,
-        categories: book.categories.pluck(:id, :name)
+        categories: book.categories.map do |p|
+            {
+        id: p.id,
+        name: p.name
+        }
+        end
     }
     end
 end

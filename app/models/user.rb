@@ -21,7 +21,7 @@ class User < ApplicationRecord
     validates :lastname, presence: true, format: { with: /\A[a-zA-Z]+\z/, message: 'Invalid characters in lastname' }
     validates :email, presence: true, uniqueness: true, format: { with: /\A[^@\s]+@[^@\s]+\z/, message: 'Invalid email' }
     validates :mobile, presence: true, format: { with: /\A\d{10}\z/ }
-    validates :password, presence: true, length: { minimum: 8 }
+    validates :password, presence: false
 
     enum role: { customer: 0, admin: 1}
 
