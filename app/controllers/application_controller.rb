@@ -3,20 +3,21 @@ class ApplicationController < ActionController::Base
   skip_before_action :verify_authenticity_token
 
   def logged_in?
-    !!current_user
+    !current_user.nil?
   end
 
   def current_user
-    @current_user ||= User.find_by(id: decoded_user_id)
+    @current_user ||= User.find_by(id: session[:user_id])
   end
 
-  def authenticate_admin?
+  def authenticate_admin
     return render_error unless current_user&.admin?
   end
 
-  def authenticate_customer?
+  def authenticate_customer
     return render_error unless current_user&.customer?
   end
+
 
   private
 

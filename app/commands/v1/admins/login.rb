@@ -1,4 +1,4 @@
-class V1::Users::Login
+class V1::Admins::Login
   prepend SimpleCommand
   attr_reader :params
   include GenerateToken

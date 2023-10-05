@@ -1,5 +1,7 @@
 class BaseBooksController < ApplicationController
 
+  skip_before_action :authorized, only: [:index, :show]
+  
   include ApiResponse
   include BaseParams
     

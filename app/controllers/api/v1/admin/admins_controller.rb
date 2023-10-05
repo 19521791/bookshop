@@ -1,34 +1,41 @@
 class Api::V1::Admin::AdminsController < BaseUsersController
-
-  before_action :authenticate_admin, only: %i[:login, :index, :show, :update, :destroy. :create]
+  
+  before_action :authenticate_admin, only: [:login, :show, :update, :destroy, :index]
 
   # POST /api/v1/admin/login
   def login
-    super
+    command = V1::Admins::Login.call(params)
+    handle_respone(command, 'login', 'Error when trying to login')
   end
 
   # POST /api/v1/admin/register
   def create
-    super
+    command = V1::Admins::Create.call(params)
+    session[:user_id] = command.result[:id]
+    handle_respone(command, 'register', 'Error when creating a new admin')
   end
 
   # GET /api/v1/admin
   def index
-    super
+    command = V1::Admins::List.call(params)
+    handle_respone(command, 'list', 'Error when listing admins')
   end
 
   # GET /api/v1/admin/:id
   def show
-    super
+    command = V1::Admins::Detail.call(params, current_user)
+    handle_respone(command, 'detail', 'Error when fetching admin details')
   end
 
   # PUT /api/v1/admin/:id
   def update
-    super
+    command = V1::Admins::Update.call(params, current_user)
+    handle_respone(command, 'update', 'Error when updating the admin')
   end
 
   # DELETE /api/v1/admin/:id
   def destroy
-    super
+    command = V1::Admins::Destroy.call(params, current_user)
+    handle_respone(command, 'destroy', 'Error when deleting the admin ')
   end
 end

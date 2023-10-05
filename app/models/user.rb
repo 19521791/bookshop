@@ -9,7 +9,7 @@
 #  mobile          :string
 #  name            :string
 #  password_digest :string
-#  role            :integer
+#  role            :integer          default("customer"), not null
 #  created_at      :datetime         not null
 #  updated_at      :datetime         not null
 #
@@ -47,5 +47,5 @@ class User < ApplicationRecord
     end
   }
 
-  scope :filtered_role, ->(flag) { where( role: flag == 1 ? "admin" : "customer")}
+  scope :filtered_role, ->(flag) { where( role: flag == 'admin' ? 'admin' : 'customer')}
 end
