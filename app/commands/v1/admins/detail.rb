@@ -8,9 +8,8 @@ class V1::Admins::Detail
   end
 
   def call
-    user = User.filtered_role(flag).find_by(id: user_id)
+    user = User.filtered_role(role).find_by(id: user_id)
                 
-
     return errors.add(:user, 'not found') unless user
 
     if current_user.admin?
@@ -29,7 +28,7 @@ class V1::Admins::Detail
     params[:id]
   end
 
-  def flag
-    params[:role]
+  def role
+    'admin'
   end
 end

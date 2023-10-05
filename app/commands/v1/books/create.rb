@@ -11,4 +11,19 @@ class V1::Books::Create
     book = current_user.books.new(params)
     book.save ? BookPresenter.new(book).json_response : book.errors
   end
+
+  private
+
+  def book_params
+    params.permit(
+      :title,
+      :author,
+      :description,
+      :thumbnail,
+      :rating,
+      :price,
+      :stock,
+      book_categories_attributes: [:id, :category_id, :_allow_destroy]
+    )
+  end
 end

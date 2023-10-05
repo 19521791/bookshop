@@ -1,4 +1,4 @@
-class V1::Books::Destroy
+class V1::Categoriess::Destroy
     prepend SimpleCommand
     attr_reader :params
   
@@ -7,13 +7,13 @@ class V1::Books::Destroy
     end
   
     def call
-        book = Book.find_by(id: book_id)
-        book ? book.destroy : errors.add(:book, 'not found')
+        category = Category.find_by(id: category_id)
+        category ? category.destroy : errors.add(:category, 'not found')
     end
 
     private
 
-    def book_id
+    def category_id
       params[:id]
     end
   end

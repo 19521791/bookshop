@@ -10,14 +10,20 @@ class V1::Customers::Update
   def call
     user = User.find_by(id: user_id)
     
-    return errors.add(:user, 'not found') if user.nil?
-
+    return errors.add(:user, 'not found') unless user
+  
     return errors.add(:user, 'Access denied. You can only update your own data.') if current_user.id != user.id
-
-    return errors.add(:user, 'not found') unless user.update(user_params)
-    
-    UserPresenter.new(user).json_response
+  
+    user.assign_attributes(user_params)
+  
+    if user.valid?
+      user.save
+      UserPresenter.new(user).json_response
+    else
+      errors.add(:user, user.errors.full_messages)
+    end
   end
+  
 
   private
 
@@ -32,7 +38,6 @@ class V1::Customers::Update
       name: "#{params[:firstname]} #{params[:lastname]}",
       email: params[:email],
       password: params[:password],
-      role: params[:role],
       mobile: params[:mobile]
     }
   end

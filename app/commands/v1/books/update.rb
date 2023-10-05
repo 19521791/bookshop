@@ -1,8 +1,8 @@
 class V1::Books::Update
     prepend SimpleCommand
-    attr_reader :params, :book_id
+    attr_reader :params
   
-    def initialize(params, book_id)
+    def initialize(params)
       @params = params
       @book_id = book_id
     end
@@ -26,6 +26,9 @@ class V1::Books::Update
       book.update(book_categories_attributes: book_categories_params)
     end
     
+    def book_id
+      params[:id]
+    end
       
   end
   

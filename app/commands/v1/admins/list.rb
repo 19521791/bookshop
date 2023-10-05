@@ -18,7 +18,7 @@ class V1::Admins::List
 
     def users
         @users ||= User.search_params(keyword)
-                        .filtered_role(flag)
+                        .filtered_role(role)
                         .order_by_fields(order_params, order_by)
                         .page(page_params)
                         .per(per_page)
@@ -36,7 +36,7 @@ class V1::Admins::List
         params[:order_by].to_s.downcase
     end
 
-    def flag
-        params[:role]
+    def role
+      'admin'
     end
 end

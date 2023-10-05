@@ -25,10 +25,11 @@ class V1::Admins::Destroy
 
   def can_delete_user?(user)
     if current_user.admin?
-      return false if current_user.id == user.id
-    else 
-      return false if current_user.id != user.id
+      return (current_user == user) || (!user.admin?)
+    else
+      return false
     end
-    true
   end
+  
+  
 end

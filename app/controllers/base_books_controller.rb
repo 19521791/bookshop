@@ -1,7 +1,5 @@
 class BaseBooksController < ApplicationController
 
-  skip_before_action :authorized, only: [:index, :show]
-  
   include ApiResponse
   include BaseParams
     
@@ -16,17 +14,17 @@ class BaseBooksController < ApplicationController
   end
 
   def create 
-    command = V1::Books::Create.call(book_params, current_user)
+    command = V1::Books::Create.call(params, current_user)
     handle_respone(command, 'create', 'Error when creating a new book')
   end
 
   def update
-    command = V1::Books::Update.call(book_params, params[:id])
+    command = V1::Books::Update.call(params)
     handle_respone(command, 'update', 'Error when updating the book')
   end
 
   def destroy
-    command = V1::Books::Destroy.call(params[:id])
+    command = V1::Books::Destroy.call(params)
     handle_respone(command, 'destroy', 'Error when deleting the book')
   end
 end

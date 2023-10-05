@@ -16,27 +16,27 @@ class V1::Customers::List
 
   private
 
-    def users
-        @users ||= User.search_params(keyword)
-                        .filtered_role(flag)
-                        .order_by_fields(order_params, order_by)
-                        .page(page_params)
-                        .per(per_page)
-    end
+  def users
+      @users ||= User.search_params(keyword)
+                      .filtered_role(role)
+                      .order_by_fields(order_params, order_by)
+                      .page(page_params)
+                      .per(per_page)
+  end
 
-    def keyword
-        params[:keyword]
-    end
+  def keyword
+      params[:keyword]
+  end
 
-    def order_params
-        params[:order].present? ? params[:order].split(',') : []
-    end
+  def order_params
+      params[:order].present? ? params[:order].split(',') : []
+  end
 
-    def order_by
-        params[:order_by].to_s.downcase
-    end
+  def order_by
+      params[:order_by].to_s.downcase
+  end
 
-    def flag
-        params[:role]
-    end
+  def role
+      'customer'
+  end
 end
