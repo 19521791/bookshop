@@ -1,4 +1,4 @@
-class V1::Users::List
+class V1::Customers::List
   prepend SimpleCommand
   include Paginable
   attr_reader :params

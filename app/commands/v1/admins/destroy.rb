@@ -1,4 +1,4 @@
-class V1::Users::Destroy
+class V1::Admins::Destroy
   prepend SimpleCommand
   attr_reader :params, :current_user
 
@@ -24,7 +24,7 @@ class V1::Users::Destroy
   end
 
   def can_delete_user?(user)
-    if current_user.role == "admin"
+    if current_user.admin?
       return false if current_user.id == user.id
     else 
       return false if current_user.id != user.id

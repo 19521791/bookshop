@@ -9,7 +9,7 @@
 #  mobile          :string
 #  name            :string
 #  password_digest :string
-#  role            :integer
+#  role            :integer          default("customer"), not null
 #  created_at      :datetime         not null
 #  updated_at      :datetime         not null
 #

@@ -1,4 +1,4 @@
-class V1::Users::Update
+class V1::Customers::Update
   prepend SimpleCommand
   attr_reader :params, :current_user
 

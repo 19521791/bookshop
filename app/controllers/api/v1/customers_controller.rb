@@ -1,34 +1,42 @@
 class Api::V1::CustomersController < BaseUsersController
 
-  before_action :authenticate_customer, only: [:login, :update, :destroy]
-
+  before_action :authenticate_customer, only: [:login, :index, :show, :update, :destroy]
+  
   # POST /api/v1/customers/login
   def login
-    super
+    command = V1::Customers::Login.call(params)
+    handle_respone(command, 'login', 'Error when trying to login')
   end
 
   # POST /api/v1/customers/register
   def create
-    super
+    command = V1::Customers::Create.call(params)
+    session[:user_id] = command.result[:id]
+    handle_respone(command, 'register', 'Error when creating a new customer')
   end
 
   # GET /api/v1/customers
   def index
-    super
+    command = V1::Customers::List.call(params)
+    handle_respone(command, 'list', 'Error when listing customers')
   end
 
   # GET /api/v1/customers/:id
   def show
-    super
+    command = V1::Customers::Detail.call(params, current_user)
+    handle_respone(command, 'detail', 'Error when fetching customer details')
   end
 
   # PUT /api/v1/customers/:id
   def update
-    super
+    command = V1::Customers::Update.call(params, current_user)
+    handle_respone(command, 'update', 'Error when updating the customer')
   end
 
   # DELETE /api/v1/customers/:id
   def destroy
-    super
+    command = V1::Customers::Destroy.call(params, current_user)
+    handle_respone(command, 'destroy', 'Error when deleting the customer ')
   end
+
 end

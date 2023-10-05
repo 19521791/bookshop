@@ -1,4 +1,4 @@
-class V1::Users::Create
+class V1::Admins::Create
   prepend SimpleCommand
   attr_reader :params
 
@@ -7,12 +7,12 @@ class V1::Users::Create
   end
 
   def call
-    user = User.new( user_params )
+    user = User.new( user_params.merge(role: 'admin') )
     
     return errors.add(:base, user.errors.full_messages) unless user.valid?
     
     user.save
-    
+        
     UserPresenter.new(user).json_response
   end
 

@@ -1,15 +1,14 @@
 class BaseUsersController < ApplicationController
 
   include ApiResponse
-  include BaseParams
     
   def login
-    command = V1::Users::Login.call(login_params)
+    command = V1::Users::Login.call(params)
     handle_respone(command, 'login', 'Error when trying to login')
   end
 
   def create
-    command = V1::Users::Create.call(user_params)
+    command = V1::Users::Create.call(params)
     handle_respone(command, 'register', 'Error when creating a new user')
   end
 
