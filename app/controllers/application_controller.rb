@@ -7,7 +7,7 @@ class ApplicationController < ActionController::Base
   end
 
   def current_user
-    @current_user ||= User.find_by(id: session[:user_id])
+    @current_user ||= User.find_by(id: decoded_user_id)
   end
 
   def authenticate_admin
@@ -17,7 +17,6 @@ class ApplicationController < ActionController::Base
   def authenticate_customer
     return render_error unless current_user&.customer?
   end
-
 
   private
 

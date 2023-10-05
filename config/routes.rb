@@ -4,6 +4,8 @@ Rails.application.routes.draw do
 
       resources :books, only: [:index, :show]
 
+      resources :categories, only: [:index, :show]
+
       post '/customers/login', to: 'customers#login'
 
       post '/customers/register', to: 'customers#create'
@@ -15,6 +17,10 @@ Rails.application.routes.draw do
         post 'create-book', to: 'books#create', as: 'create_book'
 
         resources :books, only: [:index, :show, :update, :destroy]
+
+        post 'create-category', to: 'categories#create'
+
+        resources :categories, only: [:index, :show, :update, :destroy]
 
         post '/login', to: 'admins#login'
 

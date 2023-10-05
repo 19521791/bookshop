@@ -1,6 +1,7 @@
-class Api::V1::Admin::AdminsController < BaseUsersController
+class Api::V1::Admin::AdminsController < ApplicationController
   
-  before_action :authenticate_admin, only: [:login, :show, :update, :destroy, :index]
+  include ApiResponse
+  before_action :authenticate_admin, only: [:show, :update, :destroy, :index]
 
   # POST /api/v1/admin/login
   def login
@@ -11,7 +12,6 @@ class Api::V1::Admin::AdminsController < BaseUsersController
   # POST /api/v1/admin/register
   def create
     command = V1::Admins::Create.call(params)
-    session[:user_id] = command.result[:id]
     handle_respone(command, 'register', 'Error when creating a new admin')
   end
 

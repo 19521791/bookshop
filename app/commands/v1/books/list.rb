@@ -6,7 +6,7 @@ class V1::Books::List
         @params = params
     end
 
-    def call    
+    def call
     {
         records: books.map { |book| BookPresenter.new(book).json_response },
         pagination: pagination(books)
@@ -16,11 +16,11 @@ class V1::Books::List
     private
 
     def books
-        @books ||= Book.includes(:categories)
-                        .search_params(keyword)
-                        .order_by_fields(order_params, order_by)
-                        .page(page_params)
-                        .per(per_page)
+        books ||= Book.includes(:categories)
+                    .search_params(keyword)
+                    .order_by_fields(order_params, order_by)
+                    .page(page_params)
+                    .per(per_page)
     end
 
     def keyword

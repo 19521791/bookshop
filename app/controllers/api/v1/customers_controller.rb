@@ -1,6 +1,7 @@
-class Api::V1::CustomersController < BaseUsersController
+class Api::V1::CustomersController < ApplicationController
 
-  before_action :authenticate_customer, only: [:login, :index, :show, :update, :destroy]
+  include ApiResponse
+  before_action :authenticate_customer, only: [:index, :show, :update, :destroy]
   
   # POST /api/v1/customers/login
   def login
@@ -11,7 +12,6 @@ class Api::V1::CustomersController < BaseUsersController
   # POST /api/v1/customers/register
   def create
     command = V1::Customers::Create.call(params)
-    session[:user_id] = command.result[:id]
     handle_respone(command, 'register', 'Error when creating a new customer')
   end
 

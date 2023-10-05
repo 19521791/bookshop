@@ -11,6 +11,8 @@ class V1::Admins::Login
     user = User.find_by(email: params[:email])
 
     return errors.add :authentication, 'invalid email or password' unless user && user.authenticate(params[:password])
+
+    return errors.add(:authentication, 'Access denied') unless user.admin?
     
     generate_token(user)
   end
