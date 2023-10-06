@@ -6,15 +6,14 @@ class CategoryPresenter < BasePresenter
   end
 
   def json_response
-    if category.categorable.nil?
+    sub_categories = []
+    if category.sub_categories.present?
       sub_categories = category.sub_categories.map do |sc|
         {
           id: sc.id,
           name: sc.name
         }
       end
-    else
-      sub_categories = []
     end
 
     {

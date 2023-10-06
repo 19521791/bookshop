@@ -45,4 +45,6 @@ class Category < ApplicationRecord
         .or(where(name: category_id_or_name))
         .includes(books: :categories)
     }
+
+    scope :with_books_info, -> { includes(books: { only: [:title, :author, :rating] }) }
 end
