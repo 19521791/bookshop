@@ -9,12 +9,20 @@ class V1::Categories::ListBook
 
   def call
     category = Category.find_by(id: params[:id])
-                        .books
-                        .page(page_params)
-                        .per(per_page)
-
     return errors.add(:category, 'not found') unless category
-    
-    category
+
+    books = books_in_category(category)
+    {
+      category: CategoryPresenter.new(category).json_response,
+      records: books.map { |book| BookCategoryPresenter.new(book).json_response },
+      pagination: pagination(books)
+    }
+  end
+
+  private
+
+  def books_in_category(category)
+    books = category.books.select(:id, :title, :author, :rating)
+    books.page(page_params).per(per_page)
   end
 end

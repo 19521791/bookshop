@@ -22,6 +22,8 @@ Rails.application.routes.draw do
 
         post 'create-category', to: 'categories#create'
 
+        get '/categories/:id/books', to: 'categories#list_book'
+
         resources :categories, only: [:index, :show, :update, :destroy]
 
         post '/login', to: 'admins#login'
