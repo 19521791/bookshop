@@ -17,4 +17,5 @@ class V1::Categories::Detail
     def category_id
         params[:id]
     end
+     
 end

@@ -10,5 +10,9 @@ class Api::V1::CategoriesController < BaseCategoriesController
       super
   end
 
+  def list_book
+    super
+  end
+
 end
 

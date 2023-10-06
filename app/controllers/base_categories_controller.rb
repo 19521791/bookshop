@@ -12,6 +12,11 @@ class BaseCategoriesController < ApplicationController
     handle_respone(command, 'details', 'Error when fetching category details')
   end
 
+  def list_book
+    command = V1::Categories::ListBook.call(params)
+    handle_respone(command, 'list', 'Error when listing books')
+  end
+
   def create 
     command = V1::Categories::Create.call(params, current_user)
     handle_respone(command, 'create', 'Error when creating a new category')

@@ -39,4 +39,10 @@ class Category < ApplicationRecord
             order(created_at: :desc)
         end
     }
+
+    scope :with_books_by_id_or_name, ->(category_id_or_name) {
+        where(id: category_id_or_name)
+        .or(where(name: category_id_or_name))
+        .includes(books: :categories)
+    }
 end
