@@ -17,7 +17,7 @@ class V1::Categories::Create
   def category_params
     params.permit(
       :name,
-      categories_attributes: [:id, :name, :allow_destroy]
+      sub_categories_attributes: [:id, :name, :allow_destroy]
     )
   end
 end

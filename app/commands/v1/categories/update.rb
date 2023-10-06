@@ -23,7 +23,7 @@ class V1::Categories::Update
     end
 
     def category_params
-      params.permit(:name, categories_attributes: [:name])
+      params.permit(:name, sub_categories_attributes: [:id, :name])
     end
       
   end

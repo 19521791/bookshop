@@ -7,7 +7,7 @@ class V1::Categories::Detail
     end
 
     def call
-        category = Category.includes(:categories).find_by(id: category_id)
+        category = Category.includes(:sub_categories).find_by(id: category_id)
         return errors.add(:category, 'not found') if category.nil?
         CategoryPresenter.new(category).json_response
     end
