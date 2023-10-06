@@ -1,4 +1,4 @@
-class V1::Categoriess::Destroy
+class V1::Categories::Destroy
     prepend SimpleCommand
     attr_reader :params
   
