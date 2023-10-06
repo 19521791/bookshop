@@ -6,6 +6,8 @@ Rails.application.routes.draw do
 
       resources :categories, only: [:index, :show]
 
+      get '/categories/:id/books', to: 'categories#list_book'
+
       post '/customers/login', to: 'customers#login'
 
       post '/customers/register', to: 'customers#create'

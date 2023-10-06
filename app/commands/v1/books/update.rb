@@ -13,8 +13,6 @@ class V1::Books::Update
 
     update_book_categories(book, book_params[:book_categories_attributes])
 
-    # return book.errors unless book.update(book_params)
-
     BookPresenter.new(book).json_response
   end
 

@@ -12,6 +12,10 @@ class Api::V1::Admin::CategoriesController < BaseCategoriesController
     super
   end
 
+  def list_book
+    super
+  end
+
   # POST /api/v1/admin/create-category
   def create 
     super
