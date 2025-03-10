@@ -11,7 +11,7 @@ unless Rails.env.development?
   bind "unix:///home/development/bookshop/rails/current/tmp/sockets/puma.shock"
 end
 
-thread_count = ENV.fetch("RAILS_MAX_THREAD") {5}
+threads_count = ENV.fetch("RAILS_MAX_THREADS") { 5 }.to_i
 threads threads_count, threads_count
 
 bind "unix:///home/development/bookshop/rails/current/tmp/sockets/puma.shock" unless Rails.env.development?
