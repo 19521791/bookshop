@@ -81,6 +81,16 @@ test:
 # Read https://guides.rubyonrails.org/configuring.html#configuring-a-database
 # for a full overview on how database connection configuration can be specified.
 #
+staging:
+  <<: *default
+  adapter: postgresql
+  encoding: unicode
+  database: bookshop_development
+  username: dev
+  host: localhost
+  port: 5432
+  password: 123456
+
 production:
   <<: *default
   adapter: postgresql

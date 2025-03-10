@@ -7,11 +7,12 @@ set :defaut_env, { path: "~/.rbenv/shim:~/.rbenv/bin:$PATH" }
 set :init_system, :systemd
 set :puma_threads, [4, 16]
 set :puma_workers, 2
+set :user, "development"
 
 # config/secrets.yml
 set :keep_releases, 3
 set :linked_files, %w[
-  puma.rb
+  config/puma.rb
   config/database.yml
   .env
 ]
@@ -83,12 +84,25 @@ namespace :sidekiq do
   end
 end
 
+# namespace :deploy do
+#   before :starting, "sidekiq:quite"
+#   after :finishing, "sidekiq:restart"
+#   after 'deploy:cleanup', "puma:restart"
+#   after 'deploy:failed', 'sidekiq:restart'
+# end
+
 namespace :deploy do
-  before :starting, "sidekiq:quite"
-  after :finishing, "sidekiq:restart"
-  after 'deploy:cleanup', "puma:restart"
-  after 'deploy:failed', 'sidekiq:restart'
+  desc "Create Puma config file"
+  task :setup_puma do
+    on roles(:app) do
+      execute "mkdir -p #{shared_path}/config" unless test("[ -f #{shared_path}/config/puma.rb ]")
+      upload! "config/puma.rb", "#{shared_path}/config/puma.rb" unless test("[ -f #{shared_path}/config/puma.rb ]")
+    end
+  end
 end
+
+before "deploy:check:linked_files", "deploy:setup_puma"
+
 # Default branch is :master
 # ask :branch, `git rev-parse --abbrev-ref HEAD`.chomp
 
