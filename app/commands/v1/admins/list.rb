@@ -18,7 +18,7 @@ class V1::Admins::List
 
     def users
         @users ||= User.search_params(keyword)
-                        .filtered_role(role)
+                        .filtered_role(role)  
                         .order_by_fields(order_params, order_by)
                         .page(page_params)
                         .per(per_page)

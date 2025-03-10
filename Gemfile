@@ -82,6 +82,20 @@ group :development do
   gem 'pry-rails'
 
   gem 'rack-cors', :require => 'rack/cors'
+
+  gem 'capistrano', '~> 3.17'
+
+  gem 'capistrano-rails', '~> 1.6'
+
+  gem 'capistrano-rbenv', '~> 2.2'
+
+  gem 'capistrano-bundler', '~> 2.0'
+
+  gem 'capistrano3-puma', '~> 5.2'
+  
+  gem 'capistrano-sidekiq', '~> 2.0'
+
+  gem 'capistrano-passenger'
 end
 
 group :test do
