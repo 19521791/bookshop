@@ -4,6 +4,8 @@ Rails.application.routes.draw do
 
       get '/health', to: 'public#health_check'
 
+      get '/check_env', to: 'public#check_env'
+
       resources :books, only: [:index, :show]
 
       resources :categories, only: [:index, :show]
