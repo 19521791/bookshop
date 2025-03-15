@@ -52,8 +52,6 @@ gem 'dotenv-rails'
 
 gem 'pry-rails'
 
-gem 'capistrano-passenger'
-
 # Use Kredis to get higher-level data types in Redis [https://github.com/rails/kredis]
 # gem "kredis"
 

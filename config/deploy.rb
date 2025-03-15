@@ -115,7 +115,7 @@ namespace :deploy do
   end
 end
 
-before "deploy:check:linked_files", "deploy:setup_puma"
+before "deploy:check:linked_files", "deploy:setup_puma", "puma:restart"
 
 # Default branch is :master
 # ask :branch, `git rev-parse --abbrev-ref HEAD`.chomp
