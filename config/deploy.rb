@@ -26,28 +26,42 @@ set :ssh_options, { forward_agent: true, user: fetch(:user), keys: %w(~/.ssh/haw
 
 set :conditionally_migrate, true
 namespace :puma do
+  desc 'Start Puma'
   task :start do
     on roles(:app) do
       within current_path do
-        execute :bundle, "exec pumactl -F $(pwd)/config/puma.rb stop"
+        execute :echo, "Starting Puma..."
+        execute :bundle, "exec puma -C #{current_path}/config/puma.rb --daemon"
       end
     end
   end
+  desc 'Stop Puma'
   task :stop do
     on roles(:app) do
       within current_path do
-        execute :bundle, "exec pumactl -F $(pwd)/config/puma.rb stop"
+        if test("[ -f #{current_path}/tmp/pids/puma.pid ]")
+          execute :echo, "Stopping Puma..."
+          execute :bundle, "exec pumactl -S #{current_path}/tmp/pids/puma.state stop"
+        else
+          execute :echo, "Puma is not running"
+        end
       end
     end
   end
+  desc 'Restart Puma'
   task :restart do
     on roles(:app) do
       within current_path do
-        execute :echo, 'BEGIN tmp/pids/puma.pid &'
-        execute :cat, 'tmp/pids/puma.pid &'
-        execute :bundle, "exec pumactl -S $(pwd)/tmp/pids/puma.state -F $(pwd)/puma.rb"
-        execute :cat, 'tmp/pids/puma.pid &'
-        execute :echo, 'END tmp/pids/puma.pid &'
+        if test("[ -f #{current_path}/tmp/pids/puma.pid ]")
+          execute :echo, 'BEGIN tmp/pids/puma.pid &'
+          execute :cat, 'tmp/pids/puma.pid &'
+          execute :kill, "-USR2 $(cat #{current_path}/tmp/pids/puma.pid)"
+          execute :cat, 'tmp/pids/puma.pid &'
+          execute :echo, 'END tmp/pids/puma.pid &'
+        else
+          execute :echo, "Puma is not running. Starting..."
+          execute :bundle, "exec puma -C #{current_path}/config/puma.rb --daemon"
+        end
       end
     end
   end

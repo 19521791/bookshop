@@ -7,6 +7,13 @@ module Api
           status: 'ok'
         })
       end
+
+      def check_env
+        render(json: {
+          environment: ::ENV.fetch("RAILS_ENV"),
+          variable: ::ENV.fetch("VARIABLE")
+        })
+      end
     end
   end
 end
