@@ -6,6 +6,8 @@ Rails.application.routes.draw do
 
       get '/check_env', to: 'public#check_env'
 
+      get '/check_signed_url', to: 'public#check_valid_signed_url'
+
       resources :books, only: [:index, :show]
 
       resources :categories, only: [:index, :show]
@@ -44,4 +46,8 @@ Rails.application.routes.draw do
       end
     end
   end
+end
+
+Rails.application.routes.draw do
+  mount Sidekiq::Web => "/sidekiq"
 end

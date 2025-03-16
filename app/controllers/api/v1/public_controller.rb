@@ -14,6 +14,12 @@ module Api
           variable: ::ENV.fetch("VARIABLE")
         })
       end
+
+      def check_valid_signed_url
+        render(json: {
+          records: ::Attachment.all.map { |attachment| { file: attachment.file_name, expired_at: attachment.expired_at.in_time_zone("Asia/Ho_Chi_Minh") } } 
+        })
+      end
     end
   end
 end

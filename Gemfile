@@ -28,7 +28,7 @@ gem "stimulus-rails"
 gem "jbuilder"
 
 # Use Redis adapter to run Action Cable in production
-# gem "redis", "~> 4.0"
+gem "redis", "~> 4.1.0", ">= 4.1.0"
 
 gem 'simple_command'
 
@@ -50,7 +50,10 @@ gem 'jwt'
 
 gem 'dotenv-rails'
 
+gem 'pry'
 gem 'pry-rails'
+
+gem 'concurrent-ruby', '1.3.4'
 
 # Use Kredis to get higher-level data types in Redis [https://github.com/rails/kredis]
 # gem "kredis"
@@ -63,6 +66,14 @@ gem "tzinfo-data", platforms: %i[ mingw mswin x64_mingw jruby ]
 
 # Reduces boot times through caching; required in config/boot.rb
 gem "bootsnap", require: false
+
+gem "sidekiq", "~> 7.0.9"
+gem "redis-rails"
+gem "redis-namespace", "~> 1.5", ">= 1.5.2"
+
+gem 'aws-sdk-s3'
+
+gem 'whenever', require: false
 
 # Use Sass to process CSS
 # gem "sassc-rails"

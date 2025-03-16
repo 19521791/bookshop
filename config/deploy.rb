@@ -113,9 +113,13 @@ namespace :deploy do
       upload! "config/puma.rb", "#{shared_path}/config/puma.rb" unless test("[ -f #{shared_path}/config/puma.rb ]")
     end
   end
+  task :setup_puma_and_restart do
+    invoke "deploy:setup_puma"
+    invoke "puma:restart"
+  end
 end
 
-before "deploy:check:linked_files", "deploy:setup_puma", "puma:restart"
+before "deploy:check:linked_files", "deploy:setup_puma_and_restart"
 
 # Default branch is :master
 # ask :branch, `git rev-parse --abbrev-ref HEAD`.chomp

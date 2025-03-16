@@ -15,7 +15,6 @@ class V1::Admins::Update
     return errors.add(:user, 'Access denied. You can only update your own data.') if current_user.id != user.id
   
     user.assign_attributes(user_params)
-    binding.pry
     if user.save
       
       UserPresenter.new(user).json_response
