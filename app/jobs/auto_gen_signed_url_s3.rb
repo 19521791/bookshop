@@ -18,9 +18,7 @@ class AutoGenSignedUrlS3 < ApplicationJob
   private
 
   def check_expired_time(expired_at)
-    expired_at_vn = expired_at.in_time_zone('Asia/Ho_Chi_Minh')
-
-    expired_at_vn.to_date == ::Date.tomorrow
+    expired_at.to_date == ::Date.tomorrow
   end
 
   def parse_expired_time(signed_url)
@@ -31,7 +29,7 @@ class AutoGenSignedUrlS3 < ApplicationJob
     created_at = ::Time.strptime(amz_date, '%Y%m%dT%H%M%SZ').in_time_zone('UTC')
 
     expired_at = params_hash['X-Amz-Expires'].to_i
-    (created_at + expired_at.seconds).in_time_zone('Asia/Ho_Chi_Minh')
+    (created_at + expired_at.seconds)
   end
 
   def aws_service

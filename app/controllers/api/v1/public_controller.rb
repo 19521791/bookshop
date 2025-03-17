@@ -1,6 +1,8 @@
 module Api
   module V1
     class PublicController < ApplicationController
+      before_action :authenticate_public, only: [:check_valid_signed_url]
+
       def health_check
         render(json: {
           status_code: 200,
@@ -16,9 +18,12 @@ module Api
       end
 
       def check_valid_signed_url
-        render(json: {
-          records: ::Attachment.all.map { |attachment| { file: attachment.file_name, expired_at: attachment.expired_at.in_time_zone("Asia/Ho_Chi_Minh") } } 
-        })
+        cmd = ::V1::CheckSignedUrl.call
+        if cmd.success?
+          render(json: cmd.result, status: 200)
+        else
+         render(json: cmd.errors, status: 422)
+        end
       end
     end
   end

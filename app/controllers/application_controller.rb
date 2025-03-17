@@ -18,6 +18,10 @@ class ApplicationController < ActionController::Base
     return render_error unless current_user&.customer?
   end
 
+  def authenticate_public
+    return render_error unless request.headers['HTTP_ACCESS_TOKEN'] == ::ENV.fetch("SECRET_KEY", nil)
+  end
+
   private
 
   def token

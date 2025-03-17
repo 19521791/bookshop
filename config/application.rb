@@ -13,6 +13,10 @@ module Bookshop
     config.load_defaults 7.0
     config.active_job.queue_adapter = :sidekiq
 
+    config.time_zone = 'Asia/Ho_Chi_Minh'
+
+    config.active_record.default_timezone = :utc
+
     config.middleware.insert_before(0, Rack::Cors) do
       allow do
         origins '*'
