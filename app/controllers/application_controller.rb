@@ -19,6 +19,8 @@ class ApplicationController < ActionController::Base
   end
 
   def authenticate_public
+    ::Utils.logger_color("Access Token: #{request.headers['HTTP_ACCESS_TOKEN']}")
+    ::Utils.logger_color("Secret Token: #{::ENV.fetch("SECRET_KEY", nil)}")
     return render_error unless request.headers['HTTP_ACCESS_TOKEN'] == ::ENV.fetch("SECRET_KEY", nil)
   end
 

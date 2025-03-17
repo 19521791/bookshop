@@ -4,6 +4,7 @@ module Api
       before_action :authenticate_public, only: [:check_valid_signed_url]
 
       def health_check
+        ::Utils.logger_color('Check Health')
         render(json: {
           status_code: 200,
           status: 'ok'
