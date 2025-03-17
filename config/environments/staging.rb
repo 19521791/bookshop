@@ -1,9 +1,9 @@
 Rails.application.configure do
   config.cache_classes = true
 
-  config.active_record.database_selector = { delay: 2.seconds }
-  config.active_record.database_resolver = ::ActiveRecord::Middleware::DatabaseSelector::Resolver
-  config.active_record.database_resolver_context = ::ActiveRecord::Middleware::DatabaseSelector::Resolver::Session
+  # config.active_record.database_selector = { delay: 2.seconds }
+  # config.active_record.database_resolver = ::ActiveRecord::Middleware::DatabaseSelector::Resolver
+  # config.active_record.database_resolver_context = ::ActiveRecord::Middleware::DatabaseSelector::Resolver::Session
   config.eager_load = true
   # Full error reports are disabled and caching is turned on.
   config.consider_all_requests_local       = false
