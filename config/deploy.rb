@@ -31,7 +31,7 @@ namespace :puma do
     on roles(:app) do
       within current_path do
         execute :echo, "Starting Puma..."
-        execute :bundle, "exec puma -C #{current_path}/config/puma.rb --daemon"
+        execute :sudo, :systemctl, "start puma"
       end
     end
   end
@@ -39,12 +39,8 @@ namespace :puma do
   task :stop do
     on roles(:app) do
       within current_path do
-        if test("[ -f #{current_path}/tmp/pids/puma.pid ]")
-          execute :echo, "Stopping Puma..."
-          execute :bundle, "exec pumactl -S #{current_path}/tmp/pids/puma.state stop"
-        else
-          execute :echo, "Puma is not running"
-        end
+        execute :echo, "Stopping Puma..."
+        execute :sudo, :systemctl, "stop puma"
       end
     end
   end
@@ -52,16 +48,7 @@ namespace :puma do
   task :restart do
     on roles(:app) do
       within current_path do
-        if test("[ -f #{current_path}/tmp/pids/puma.pid ]")
-          execute :echo, 'BEGIN tmp/pids/puma.pid &'
-          execute :cat, 'tmp/pids/puma.pid &'
-          execute :kill, "-USR2 $(cat #{current_path}/tmp/pids/puma.pid)"
-          execute :cat, 'tmp/pids/puma.pid &'
-          execute :echo, 'END tmp/pids/puma.pid &'
-        else
-          execute :echo, "Puma is not running. Starting..."
-          execute :bundle, "exec puma -C #{current_path}/config/puma.rb --daemon"
-        end
+        execute :sudo, :systemctl, "restart puma"
       end
     end
   end
