@@ -31,7 +31,7 @@ namespace :puma do
     on roles(:app) do
       within current_path do
         execute :echo, "Starting Puma..."
-        execute :sudo, :systemctl, "start puma"
+        execute :sudo, :systemctl, "start bookshop.service"
       end
     end
   end
@@ -40,7 +40,7 @@ namespace :puma do
     on roles(:app) do
       within current_path do
         execute :echo, "Stopping Puma..."
-        execute :sudo, :systemctl, "stop puma"
+        execute :sudo, :systemctl, "stop bookshop.service"
       end
     end
   end
@@ -48,7 +48,7 @@ namespace :puma do
   task :restart do
     on roles(:app) do
       within current_path do
-        execute :sudo, :systemctl, "restart puma"
+        execute :sudo, :systemctl, "restart bookshop.service"
       end
     end
   end
