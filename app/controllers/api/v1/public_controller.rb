@@ -1,9 +1,9 @@
 module Api
   module V1
     class PublicController < ApplicationController
-      before_action :authenticate_public, only: [:check_valid_signed_url]
+      before_action :authenticate_public, only: [:check_valid_signed_url, :get_signed_url]
 
-      def health_check
+      def check_health
         ::Utils.logger_color('Check Health')
         render(json: {
           status_code: 200,
@@ -20,6 +20,15 @@ module Api
 
       def check_valid_signed_url
         cmd = ::V1::CheckSignedUrl.call
+        if cmd.success?
+          render(json: cmd.result, status: 200)
+        else
+         render(json: cmd.errors, status: 422)
+        end
+      end
+
+      def get_signed_url
+        cmd = ::V1::GetSignedUrl.call
         if cmd.success?
           render(json: cmd.result, status: 200)
         else
