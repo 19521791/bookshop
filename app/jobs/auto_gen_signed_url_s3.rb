@@ -3,15 +3,16 @@ class AutoGenSignedUrlS3 < ApplicationJob
 
   def perform
     attachments&.each do |attachment|
-      if check_expired_time(attachment.expired_at)
-        presigned_url = aws_service.generate_presigned_url(attachment.file_name)
+      presigned_url = aws_service.generate_presigned_url(attachment.file_name)
 
-        expired_at_vn = parse_expired_time(presigned_url)
+      expired_at_vn = parse_expired_time(presigned_url)
 
-        attachment.update(signed_url: presigned_url, expired_at: expired_at_vn)
-      else
-        puts 'Everything is valid'
-      end
+      attachment.update(signed_url: presigned_url, expired_at: expired_at_vn)
+
+      ::ActionCable.server.broadcast(
+        "signed_urls_channel",
+        { key: ::FILE_NAMES[attachment.file_name], signed_url: presigned_url, type: 'SIGNED_URLS_UPDATE' }
+      )
     end
   end
 
@@ -37,6 +38,6 @@ class AutoGenSignedUrlS3 < ApplicationJob
   end
 
   def attachments
-    ::Attachment.where("DATE(expired_at AT TIME ZONE 'Asia/Ho_Chi_Minh') =?", ::Date.tomorrow)
+    ::Attachment.where("expired_at BETWEEN ? AND ?", ::Time.current, 5.hours.from_now)
   end
 end
