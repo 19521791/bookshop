@@ -103,6 +103,10 @@ group :development do
   gem 'capistrano3-puma', '~> 5.2'
   
   gem 'capistrano-sidekiq', '~> 2.0'
+
+  gem 'derailed_benchmarks'
+
+  gem 'syntax_suggest'
 end
 
 group :test do

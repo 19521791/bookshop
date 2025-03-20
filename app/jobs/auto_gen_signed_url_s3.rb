@@ -2,12 +2,14 @@ class AutoGenSignedUrlS3 < ApplicationJob
   queue_as :default
 
   def perform
-    attachments&.each do |attachment|
+    return if attachments.empty?
+
+    attachments.each do |attachment|
       presigned_url = aws_service.generate_presigned_url(attachment.file_name)
 
-      expired_at_vn = ::Utils.parse_expired_time(presigned_url)
+      expired_at = ::Utils.parse_expired_time(presigned_url)
 
-      attachment.update(signed_url: presigned_url, expired_at: expired_at_vn)
+      attachment.update(signed_url: presigned_url, expired_at:)
 
       ::ActionCable.server.broadcast(
         "signed_urls_channel",

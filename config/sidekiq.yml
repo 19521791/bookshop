@@ -4,7 +4,7 @@
   :concurrency: 25
   :daemon: true
 :staging:
-  :concurrency: 25
+  :concurrency: 5
   :daemon: true
 :production:
   :concurrency: 25
