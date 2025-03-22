@@ -19,7 +19,7 @@ module Api
       end
 
       def check_valid_signed_url
-        cmd = ::V1::CheckSignedUrl.call
+        cmd = ::V1::Aws::CheckSignedUrl.call
         if cmd.success?
           render(json: cmd.result, status: 200)
         else
@@ -28,7 +28,7 @@ module Api
       end
 
       def get_signed_url
-        cmd = ::V1::GetSignedUrl.call
+        cmd = ::V1::Aws::GetSignedUrl.call
         if cmd.success?
           render(json: cmd.result, status: 200)
         else

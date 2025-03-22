@@ -93,7 +93,7 @@ group :development do
   gem 'annotate'
 
   gem 'capistrano', '~> 3.17'
-
+  
   gem 'capistrano-rails', '~> 1.6'
 
   gem 'capistrano-rbenv', '~> 2.2'
@@ -107,6 +107,9 @@ group :development do
   gem 'derailed_benchmarks'
 
   gem 'syntax_suggest'
+
+  gem 'faraday'
+
 end
 
 group :test do

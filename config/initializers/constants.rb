@@ -22,3 +22,28 @@ FILE_NAMES = {
   'arrow.svg' => 'arrow',
   'whale.png' => 'whale'
 }
+
+FILE_NAMES_NGINX = {
+  'clown.png' => 'clown.png',
+  'image.png' => 'image.png',
+  'project_icons/nine-dash.png' => 'nine-dash.png',
+  'project_icons/note.png' => 'note.png',
+  'project_icons/trello-board.png' => 'trello-board.png',
+  'project_icons/hello-clever.png' => 'hello-clever.png',
+  'css.svg' => 'css.svg',
+  'express.svg' => 'express.svg',
+  'git.svg' => 'git.svg',
+  'github.svg' => 'github.svg',
+  'html.svg' => 'html.svg',
+  'ice_favicon.ico' => 'ice_favicon.svg',
+  'javascript.svg' => 'javascript.svg',
+  'linkedin.svg' => 'linkedin.svg',
+  'mongodb.svg' => 'mongodb.svg',
+  'nodejs.svg' => 'nodejs.svg',
+  'python-svgrepo-com.svg' => 'python-svgrepo-com.svg',
+  'rails-svgrepo-com.svg' => 'rails-svgrepo-com.svg',
+  'ruby-svgrepo-com.svg' => 'ruby-svgrepo-com.svg',
+  'react.svg' => 'react.svg',
+  'arrow.svg' => 'arrow.svg',
+  'whale.png' => 'whale.svg'
+}
