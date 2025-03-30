@@ -12,7 +12,7 @@ module V1
         elsif ::Rails.env.development?
           {
             records:attachments.map { |attachment| {
-              key: ::FILE_NAMES_NGINX[attachment.file_name],
+              key: ::FILE_NAMES[attachment.file_name],
               signed_url: chain_signed_url(attachment.file_name)
             }}
           }
@@ -31,9 +31,8 @@ module V1
       end
 
       def chain_signed_url(file_name)
-        image_name = ::FILE_NAMES_NGINX[file_name]
         base_url = 'http://api.hub.douglusnguyen.site/local-assets'
-        "#{base_url}/#{image_name}"
+        "#{base_url}/#{file_name}"
       end
 
       def attachments
