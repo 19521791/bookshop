@@ -85,25 +85,21 @@ namespace :sidekiq do
   end
 end
 
-namespace :deploy do
-  before :starting, "sidekiq:quite"
-  after :finishing, "sidekiq:restart"
-  after 'deploy:cleanup', "puma:restart"
-  after 'deploy:failed', 'sidekiq:restart'
-end
-
 # namespace :deploy do
-#   desc "Create Puma config file"
-#   task :setup_puma do
-#     on roles(:app) do
-#       execute "mkdir -p #{shared_path}/config" unless test("[ -f #{shared_path}/config/puma.rb ]")
-#       upload! "config/puma.rb", "#{shared_path}/config/puma.rb" unless test("[ -f #{shared_path}/config/puma.rb ]")
-#     end
-#   end
-#   task :setup_puma_and_restart do
-#     invoke "deploy:setup_puma"
-#     invoke "puma:restart"
-#   end
+#   before :starting, "sidekiq:quite"
+#   after :finishing, "sidekiq:restart"
+#   after 'deploy:cleanup', "puma:restart"
+#   after 'deploy:failed', 'sidekiq:restart'
 # end
 
-# before "deploy:check:linked_files", "deploy:setup_puma_and_restart"
+namespace :deploy do
+  desc "Create Puma config file"
+  task :setup_puma do
+    on roles(:app) do
+      execute "mkdir -p #{shared_path}/config" unless test("[ -f #{shared_path}/config/puma.rb ]")
+      upload! "config/puma.rb", "#{shared_path}/config/puma.rb" unless test("[ -f #{shared_path}/config/puma.rb ]")
+    end
+  end
+end
+
+before "deploy:check:linked_files", "deploy:setup_puma"
