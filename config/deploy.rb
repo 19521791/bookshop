@@ -7,7 +7,7 @@ set :defaut_env, { path: "~/.rbenv/shim:~/.rbenv/bin:$PATH" }
 set :init_system, :systemd
 set :puma_threads, [4, 16]
 set :puma_workers, 2
-set :user, "development"
+set :user, "staging"
 
 # config/secrets.yml
 set :keep_releases, 3

@@ -10,7 +10,7 @@ Rails.application.configure do
   config.action_controller.perform_caching = true
 
   config.action_cable.url = 'wss://api.douglusnguyen.site/cable'
-  config.action_cable.allowed_request_origins = ['https://douglusnguyen.site']  
+  config.action_cable.allowed_request_origins = ['https://douglusnguyen.site']
 
   config.action_mailer.logger = nil
   config.public_file_server.enabled = ENV['RAILS_SERVE_STATIC_FILES'].present?
