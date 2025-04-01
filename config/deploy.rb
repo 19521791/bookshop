@@ -22,12 +22,7 @@ set :linked_dirs,
 
 set :pty, false
 
-set :ssh_options, {
-  auth_methods: ['publickey'],
-  keys: %w(/home/nguyenlong/.ssh/hawkhost_rsa),
-  forward_agent: true,
-  sudo_options: ['-S']
-}
+set :ssh_options, { forward_agent: true, user: fetch(:user), keys: %w(~/.ssh/hawkhost_rsa) }
 
 set :conditionally_migrate, true
 namespace :puma do
@@ -36,7 +31,7 @@ namespace :puma do
     on roles(:app) do
       within current_path do
         execute :echo, "Starting Puma..."
-        execute :sudo, :systemctl, "start bookshop.service"
+        execute :sudo, :systemctl, "start puma.service"
       end
     end
   end
@@ -45,7 +40,7 @@ namespace :puma do
     on roles(:app) do
       within current_path do
         execute :echo, "Stopping Puma..."
-        execute :sudo, :systemctl, "stop bookshop.service"
+        execute :sudo, :systemctl, "stop puma.service"
       end
     end
   end
@@ -53,7 +48,7 @@ namespace :puma do
   task :restart do
     on roles(:app) do
       within current_path do
-        execute :sudo, :systemctl, "restart bookshop.service"
+        execute :sudo, :systemctl, "restart puma.service"
       end
     end
   end
