@@ -85,13 +85,6 @@ namespace :sidekiq do
   end
 end
 
-# namespace :deploy do
-#   before :starting, "sidekiq:quite"
-#   after :finishing, "sidekiq:restart"
-#   after 'deploy:cleanup', "puma:restart"
-#   after 'deploy:failed', 'sidekiq:restart'
-# end
-
 namespace :deploy do
   desc "Create Puma config file"
   task :setup_puma do
@@ -100,6 +93,11 @@ namespace :deploy do
       upload! "config/puma.rb", "#{shared_path}/config/puma.rb" unless test("[ -f #{shared_path}/config/puma.rb ]")
     end
   end
+
+  before :starting, "sidekiq:quite"
+  before :check, "setup_puma"
+  after :finishing, "sidekiq:restart"
+  after :finishing, "puma:restart"
+  after :failed, "sidekiq:restart"
 end
 
-before "deploy:check:linked_files", "deploy:setup_puma"
