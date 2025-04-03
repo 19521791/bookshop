@@ -4,6 +4,8 @@ threads threads_count, threads_count
 
 bind "unix:///home/staging/bookshop/rails/current/tmp/sockets/puma.sock" unless ::Rails.env.development?
 
+umask 0007
+
 preload_app!
 
 threads_count = ::ENV.fetch("RAILS_MAX_THREADS", 5)
