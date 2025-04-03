@@ -17,8 +17,12 @@ module Bookshop
 
     config.middleware.insert_before(0, Rack::Cors) do
       allow do
-        origins Rails.application.credentials[Rails.env.to_sym][:allowed_origins]
-        resource '*', headers: :any, methods: %i[get post patch put delete]
+        origins '*'
+        resource '*',
+          headers: :any,
+          methods: %i[get post patch put delete options],
+          expose: ['Authorization', 'access-token', 'client', 'expiry', 'uid'],
+          max_age: 600
       end
     end
 
