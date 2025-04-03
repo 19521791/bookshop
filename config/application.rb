@@ -17,7 +17,7 @@ module Bookshop
 
     config.middleware.insert_before(0, Rack::Cors) do
       allow do
-        origins 'http://localhost:5173', 'http://127.0.0.1:5173', 'https://hub.douglusnguyen.site'
+        origins Rails.application.credentials[Rails.env.to_sym][:allowed_origins]
         resource '*', headers: :any, methods: %i[get post patch put delete]
       end
     end
