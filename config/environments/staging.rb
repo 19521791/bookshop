@@ -9,8 +9,8 @@ Rails.application.configure do
   config.consider_all_requests_local       = false
   config.action_controller.perform_caching = true
 
-  config.action_cable.url = 'wss://api.douglusnguyen.site/cable'
-  config.action_cable.allowed_request_origins = ['https://douglusnguyen.site']
+  config.action_cable.url = ENV['ACTION_CABLE_URL']
+  config.action_cable.allowed_request_origins = ENV['ACTION_CABLE_ALLOWED_ORIGINS'].to_s.split
 
   config.action_mailer.logger = nil
   config.public_file_server.enabled = ENV['RAILS_SERVE_STATIC_FILES'].present?
