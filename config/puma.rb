@@ -2,9 +2,11 @@ workers ENV.fetch("WEB_CONCURRENCY") {2}
 threads_count = ENV.fetch("RAILS_MAX_THREAD") {5}
 threads threads_count, threads_count
 
-bind "unix:///home/staging/bookshop/rails/current/tmp/sockets/puma.sock" unless ::Rails.env.development?
+unless ::Rails.env.development?
+  bind "unix:///home/staging/bookshop/rails/current/tmp/sockets/puma.sock"
 
-umask 0007
+  umask 00007
+end
 
 preload_app!
 
