@@ -22,6 +22,7 @@ FILE_NAMES = {
   'capistrano-svgrepo-com.svg' => 'capistrano',
   'project_icons/portfolio.png' => 'portfolio',
   'about_me.jpg' => 'myself',
+  'about_me_lite.png' => 'myselflite',
   'location-pin-svgrepo-com.svg' => 'location',
   'ansible-svgrepo-com.svg' => 'ansible',
   'material-ui-svgrepo-com.svg' => 'material',

@@ -31,7 +31,7 @@ module V1
       end
 
       def chain_signed_url(file_name)
-        base_url = 'http://api.hub.douglusnguyen.site/local-assets'
+        base_url = 'http://image.douglusnguyen.site/local-assets'
         "#{base_url}/#{file_name}"
       end
 
