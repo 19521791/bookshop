@@ -22,7 +22,7 @@ set :linked_dirs,
 
 set :pty, false
 
-set :ssh_options, { forward_agent: true, user: fetch(:user), keys: %w(~/.ssh/hawkhost_rsa) }
+set :ssh_options, { forward_agent: true, user: fetch(:user), keys: %w(~/.ssh/id_rsa_server) }
 
 set :conditionally_migrate, true
 namespace :puma do
