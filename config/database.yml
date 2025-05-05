@@ -2,12 +2,12 @@ default: &default
   adapter: postgresql
   encoding: unicode
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
-  username: nguyenlong
-  password: <%= ENV['APPNAME_DATABASE_PASSWORD'] %>
+  username: postgres
+  password: <%= ENV['BOOKSHOP_DATABASE_PASSWORD'] %>
 
 development:
   <<: *default
-  database: bookshop_development
+  database: bookshop
 
 test:
   <<: *default
@@ -27,8 +27,8 @@ production:
   <<: *default
   adapter: postgresql
   encoding: unicode
-  database: bookshop_development
-  username: dev
+  database: bookshop
+  username: douglus
   host: localhost
   port: 5432
   password: <%= ENV["BOOKSHOP_DATABASE_PASSWORD"] %>

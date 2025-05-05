@@ -480,6 +480,16 @@ Style/RedundantAssignment:
     - 'app/commands/utils.rb'
     - 'app/commands/v1/migration/migrate_signed_url.rb'
 
+# Offense count: 11
+# This cop supports safe autocorrection (--autocorrect).
+Style/RedundantConstantBase:
+  Exclude:
+    - 'config/environments/production.rb'
+    - 'config/environments/staging.rb'
+    - 'config/initializers/sidekiq.rb'
+    - 'config/puma.rb'
+    - 'config/schedule.rb'
+
 # Offense count: 3
 # This cop supports unsafe autocorrection (--autocorrect-all).
 # Configuration parameters: SafeForConstants.
