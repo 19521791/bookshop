@@ -73,6 +73,8 @@ gem "redis-namespace", "~> 1.5", ">= 1.5.2"
 
 gem 'aws-sdk-s3'
 
+gem "rubocop"
+
 gem 'whenever', require: false
 
 # Use Sass to process CSS
