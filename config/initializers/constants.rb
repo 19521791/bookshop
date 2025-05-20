@@ -43,5 +43,11 @@ FILE_NAMES = {
   'funny_meo.jpg' => 'funnymeo',
   'docker-svgrepo-com.svg' => 'docker',
   'container-registry-svgrepo-com.svg' => 'compose',
-  'envelope-dossier-svgrepo-com.svg' => 'mail'
+  'envelope-dossier-svgrepo-com.svg' => 'mail',
+  'visualize.png' => 'visualize',
+  'trafficlight.png' => 'trafficlight',
+  'preprocessing.png' => 'preprocessing',
+  'laneline.png' => 'laneline',
+  'gaussian.png' => 'gaussian',
+  'note.png' => 'note'
 }
