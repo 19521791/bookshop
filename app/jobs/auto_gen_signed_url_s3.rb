@@ -26,7 +26,9 @@ class AutoGenSignedUrlS3 < ApplicationJob
 
   def attachments
     ::Attachment.where(
-      "expired_at <= ? OR expired_at BETWEEN ? AND ?", ::Time.current, ::Time.current, 12.hours.from_now
+      "expired_at <= :now OR expired_at BETWEEN :now AND :later OR expired_at IS NULL",
+      now: Time.current,
+      later: 12.hours.from_now
     )
-  end
+  end  
 end

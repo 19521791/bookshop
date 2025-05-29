@@ -9,16 +9,12 @@ module V1
           {
             records: attachments.map { |attachment| presenter(attachment) }
           }
-        elsif ::Rails.env.development?
+        else
           {
             records:attachments.map { |attachment| {
               key: ::FILE_NAMES[attachment.file_name],
               signed_url: chain_signed_url(attachment.file_name)
             }}
-          }
-        else
-          {
-            records: attachments.map { |attachment| presenter(attachment) }
           }
         end
       end
