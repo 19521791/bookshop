@@ -80,4 +80,4 @@ FILE_NAMES = {
   "trafficlight-5.jpg" => "trafficlight-5",
   "trafficlight-6.jpg" => "trafficlight-6",
   "trafficlight-7.jpg" => "trafficlight-7"
-}
+}.freeze
