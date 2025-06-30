@@ -10,11 +10,6 @@ class AutoGenSignedUrlS3 < ApplicationJob
       expired_at = ::Utils.parse_expired_time(presigned_url)
 
       attachment.update(signed_url: presigned_url, expired_at:)
-
-      ::ActionCable.server.broadcast(
-        "signed_urls_channel",
-        { key: ::FILE_NAMES[attachment.file_name], signed_url: presigned_url, type: 'SIGNED_URLS_UPDATE' }
-      )
     end
   end
 

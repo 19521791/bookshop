@@ -1,8 +1,6 @@
 module Api
   module V1
     class PublicController < ApplicationController
-      before_action :authenticate_public, only: [:check_valid_signed_url, :get_signed_url]
-
       def check_health
         ::Utils.logger_color('Check Health')
         render(json: {
