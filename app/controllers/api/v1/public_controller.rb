@@ -1,6 +1,8 @@
 module Api
   module V1
     class PublicController < ApplicationController
+      skip_before_action :verify_authenticity_token
+
       def check_health
         ::Utils.logger_color('Check Health')
         render(json: {
@@ -31,6 +33,24 @@ module Api
           render(json: cmd.result, status: 200)
         else
          render(json: cmd.errors, status: 422)
+        end
+      end
+
+      def upload_file
+        cmd = ::V1::Aws::UploadFile.call(params)
+        if cmd.success?
+          render(json: cmd.result, status: 200)
+        else
+          render(json: cmd.errors, status: 422)
+        end
+      end
+
+      def check_existed_object_in_s3
+        cmd = ::V1::Aws::CheckConsistentS3Object.call
+        if cmd.success?
+          render(json: cmd.result, status: 200)
+        else
+          render(json: cmd.errors, status: 422)
         end
       end
     end

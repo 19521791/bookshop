@@ -9,7 +9,7 @@ module V1
   
       def presenter(attachment)
         {
-          file: attachment.file_name,
+          file: ::Utils.key_from_filename(attachment.file_name),
           expired_at: attachment.expired_at.iso8601,
           time_remaining: calculate_time_remaining(attachment)
         }

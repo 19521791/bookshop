@@ -1,4 +1,4 @@
 class ApplicationMailer < ActionMailer::Base
-  default from: "from@example.com"
+  default from: "Portfolio <#{ENV.fetch('EMAIL', nil)}>"
   layout "mailer"
 end

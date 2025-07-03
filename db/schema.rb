@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2025_03_16_055206) do
+ActiveRecord::Schema[7.0].define(version: 2025_07_02_110504) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -21,48 +21,11 @@ ActiveRecord::Schema[7.0].define(version: 2025_03_16_055206) do
     t.datetime "expired_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "file_key", comment: "Object key in S3"
+    t.string "checksum", limit: 64, comment: "MD5/SHA1 checksum for deduplication"
+    t.bigint "file_size", comment: "File size in bytes"
+    t.string "content_type", comment: "MIME type of the file"
+    t.jsonb "metadata", default: {}, comment: "Additional metadata"
   end
 
-  create_table "book_categories", force: :cascade do |t|
-    t.bigint "book_id", null: false
-    t.bigint "category_id", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["book_id"], name: "index_book_categories_on_book_id"
-    t.index ["category_id"], name: "index_book_categories_on_category_id"
-  end
-
-  create_table "books", force: :cascade do |t|
-    t.string "title", null: false
-    t.string "author", null: false
-    t.text "description"
-    t.string "thumbnail"
-    t.float "rating"
-    t.decimal "price", null: false
-    t.boolean "stock"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
-  create_table "categories", force: :cascade do |t|
-    t.string "name", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.integer "categorable_id"
-    t.string "categorable_type"
-  end
-
-  create_table "users", force: :cascade do |t|
-    t.string "email", null: false
-    t.string "password_digest", null: false
-    t.string "first_name", null: false
-    t.string "last_name", null: false
-    t.integer "role", default: 0, null: false
-    t.string "mobile"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
-  add_foreign_key "book_categories", "books"
-  add_foreign_key "book_categories", "categories"
 end

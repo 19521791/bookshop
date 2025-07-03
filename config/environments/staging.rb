@@ -9,6 +9,8 @@ Rails.application.configure do
   config.consider_all_requests_local       = false
   config.action_controller.perform_caching = true
 
+  config.action_controller.asset_host = ::ENV.fetch('CLOUDFRONT_DOMAIN', nil)
+
   config.action_mailer.logger = nil
   config.public_file_server.enabled = ENV['RAILS_SERVE_STATIC_FILES'].present?
   config.assets.compile = false

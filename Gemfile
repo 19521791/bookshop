@@ -55,6 +55,13 @@ gem 'pry-rails'
 
 gem 'concurrent-ruby', '1.3.4'
 
+gem 'aws-sdk-cloudfront'
+
+gem 'exception_notification'
+gem 'exception_notification_telegram'
+
+gem 'addressable'
+
 # Use Kredis to get higher-level data types in Redis [https://github.com/rails/kredis]
 # gem "kredis"
 

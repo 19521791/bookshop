@@ -81,3 +81,7 @@ FILE_NAMES = {
   "trafficlight-6.jpg" => "trafficlight-6",
   "trafficlight-7.jpg" => "trafficlight-7"
 }.freeze
+
+BATCH_SIZE = 50
+MAX_RETRIES = 3
+SLEEP_INTERVAL = 1

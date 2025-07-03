@@ -31,5 +31,13 @@
 /config/master.key
 
 .env
+.env.development
 
 /config/credentials/staging.key
+
+docker-compose.local.yml
+
+/config/cloudfront.pem
+/config/cloudfront.pem.base64
+
+attachments_dump.sql

@@ -7,7 +7,11 @@ default: &default
 
 development:
   <<: *default
+  username: dev
+  password: secret
   database: bookshop
+  host: localhost
+  port: 5434
 
 test:
   <<: *default
