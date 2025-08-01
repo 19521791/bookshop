@@ -41,6 +41,10 @@ module V1
           signed_url = cloudfront_service.generate_presigned_url(file.original_filename)
 
           if attachment.persisted?
+            attachment.update!(
+              signed_url: signed_url,
+              expired_at: ::Utils.parse_expired_time(signed_url)
+            )
             { file_name: file.original_filename, signed_url:, expired_at: ::Utils.parse_expired_time(signed_url) }
           else
             errors.add(:attachment, ::I18n.t('errors.failed_saving'))
@@ -68,7 +72,8 @@ module V1
       def build_attachment_record
         ::Attachment.create(
           file_name: file.original_filename.gsub(' ', '_'),
-          container: 'aws-s3'
+          container: 'aws-s3',
+          content_type: file.content_type
         )
       end
     end

@@ -25,5 +25,5 @@ class AutoGenSignedUrlS3 < ApplicationJob
       now: Time.current,
       later: 12.hours.from_now
     )
-  end  
+  end
 end
