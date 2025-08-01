@@ -5,7 +5,7 @@ class AutoGenSignedUrlS3 < ApplicationJob
     return if attachments.empty?
 
     attachments.each do |attachment|
-      presigned_url = aws_service.generate_presigned_url(attachment.file_name)
+      presigned_url = cloudfront_service.generate_presigned_url(attachment.file_name)
 
       expired_at = ::Utils.parse_expired_time(presigned_url)
 
@@ -15,8 +15,8 @@ class AutoGenSignedUrlS3 < ApplicationJob
 
   private
 
-  def aws_service
-    @aws_service ||= ::AwsService.new
+  def cloudfront_service
+    ::CloudFrontService.new
   end
 
   def attachments
