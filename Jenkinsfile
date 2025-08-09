@@ -15,7 +15,7 @@ pipeline {
                 checkout([$class: 'GitSCM',
                           branches: [[name: '*/main']],
                           userRemoteConfigs: [[
-                              url: 'git@github.com:19521791/bookshop.git',
+                              url: 'https://github.com/19521791/bookshop',
                               credentialsId: 'vps-ssh-key'
                           ]]
                 ])
