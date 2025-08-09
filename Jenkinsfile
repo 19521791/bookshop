@@ -23,7 +23,7 @@ pipeline {
         }
         stage('Install dependencies') {
             steps {
-                sh 'bundle install --deployment --without development test'
+                sh 'bundle install --deployment --path vendor/bundle --without development test'
             }
         }
         stage('Deploy') {
