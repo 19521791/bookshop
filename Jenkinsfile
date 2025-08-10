@@ -1,3 +1,8 @@
+def buildDuration = ""
+def timestamp = ""
+def emoji = ""
+def color = ""
+
 pipeline {
     agent { label 'work-ruby' }
     triggers {
@@ -38,78 +43,75 @@ pipeline {
             }
         }
     }
+
     post {
         always {
             script {
-                buildDuration = currentBuild.durationString?.replace(' and counting', '') ?: 'N/A'
+                buildDuration = currentBuild.durationString.replace(' and counting', '')
                 timestamp = new Date().format("yyyy-MM-dd HH:mm:ss z")
-
-                isSuccess = (currentBuild.currentResult == 'SUCCESS')
-                emoji = isSuccess ? '✅' : '❌'
-                color = isSuccess ? '#36a64f' : '#ff0000'
-
-                escapeMarkdown = { text -> text.replaceAll(/([_*\[\]()~`>#+\-=|{}.!])/, '\\\\$1') }
-
-                projectName = env.JOB_NAME
-                buildNumber = env.BUILD_NUMBER
-                buildUrl = env.BUILD_URL
-                resultText = isSuccess ? "DEPLOYMENT SUCCESS" : "DEPLOYMENT FAILED"
-
-                emailBody = """
-                    <html>
-                        <body style="font-family: Arial, sans-serif; background-color: #f9f9f9; padding: 20px;">
-                            <div style="max-width: 600px; background: white; padding: 20px; border-radius: 8px;">
-                            <h2 style="color: ${color};">${emoji} ${resultText}</h2>
-                            <p><strong>Project:</strong> ${projectName}</p>
-                            <p><strong>Build #:</strong> ${buildNumber}</p>
-                            <p><strong>Status:</strong> ${currentBuild.currentResult}</p>
-                            <p><strong>Duration:</strong> ${buildDuration}</p>
-                            <p><strong>Timestamp:</strong> ${timestamp}</p>
-                            <p><a href="${buildUrl}" style="color: ${color}; font-weight: bold;">View Build Details</a></p>
-                            </div>
-                        </body>
-                    </html>
-                """
-
-                telegramMessage = """
-                    *${emoji} ${escapeMarkdown(resultText)}*
-                            
-                    *Project*: ${escapeMarkdown(projectName)}
-                    *Build*: #${buildNumber}
-                    *Status*: ${escapeMarkdown(currentBuild.currentResult)}
-                    *Duration*: ${escapeMarkdown(buildDuration)}
-                    *Timestamp*: ${escapeMarkdown(timestamp)}
-                """
+                
+                emoji = currentBuild.currentResult == 'SUCCESS' ? '✅' : '❌'
+                color = currentBuild.currentResult == 'SUCCESS' ? '#36a64f' : '#ff0000'
             }
         }
-
         success {
             mail to: "${MAIL_RECIPIENTS}",
-                subject: "${emoji} [SUCCESS] ${projectName} #${buildNumber}",
-                body: emailBody,
+                subject: "${emoji} [SUCCESS] ${env.JOB_NAME} #${env.BUILD_NUMBER}",
+                body: """
+                    <html>
+                    <body>
+                        <h2 style="color: ${color};">Deployment Successful</h2>
+                        <p><strong>Project:</strong> ${env.JOB_NAME}</p>
+                        <p><strong>Build #:</strong> ${env.BUILD_NUMBER}</p>
+                        <p><strong>Duration:</strong> ${buildDuration}</p>
+                        <p><strong>Build URL:</strong> <a href="${env.BUILD_URL}">View Details</a></p>
+                        <p><strong>Timestamp:</strong> ${timestamp}</p>
+                    </body>
+                    </html>
+                """,
                 mimeType: "text/html"
 
             sh """
                 curl -s -X POST "https://api.telegram.org/bot${TELEGRAM_TOKEN}/sendMessage" \
                 -d chat_id="${TELEGRAM_CHAT_ID}" \
-                -d text="${telegramMessage}" \
-                -d parse_mode="MarkdownV2" \
-                -d reply_markup='{"inline_keyboard":[[{"text":"View Build","url":"${buildUrl}"}]]}'
+                -d text="*${emoji} DEPLOYMENT SUCCESS* \
+                \n\n*Project*: ${env.JOB_NAME} \
+                \n*Build*: \\#${env.BUILD_NUMBER} \
+                \n*Duration*: ${buildDuration} \
+                \n*Timestamp*: ${timestamp}" \
+                -d parse_mode="Markdown" \
+                -d reply_markup='{"inline_keyboard":[[{"text":"View Build","url":"${env.BUILD_URL}"}]]}'
             """
         }
-
         failure {
             mail to: "${MAIL_RECIPIENTS}",
-                subject: "${emoji} [FAILED] ${projectName} #${buildNumber}",
-                body: emailBody,
+                subject: "${emoji} [FAILED] ${env.JOB_NAME} #${env.BUILD_NUMBER}",
+                body: """
+                    <html>
+                    <body>
+                        <h2 style="color: ${color};">Deployment Failed</h2>
+                        <p><strong>Project:</strong> ${env.JOB_NAME}</p>
+                        <p><strong>Build #:</strong> ${env.BUILD_NUMBER}</p>
+                        <p><strong>Error:</strong> ${currentBuild.currentResult}</p>
+                        <p><strong>Duration:</strong> ${buildDuration}</p>
+                        <p><strong>Build URL:</strong> <a href="${env.BUILD_URL}">Debug Logs</a></p>
+                        <p><strong>Timestamp:</strong> ${timestamp}</p>
+                    </body>
+                    </html>
+                """,
                 mimeType: "text/html"
 
             sh """
                 curl -s -X POST "https://api.telegram.org/bot${TELEGRAM_TOKEN}/sendMessage" \
                 -d chat_id="${TELEGRAM_CHAT_ID}" \
-                -d text="${telegramMessage}" \
-                -d parse_mode="MarkdownV2" \
-                -d reply_markup='{"inline_keyboard":[[{"text":"Debug Logs","url":"${buildUrl}"}]]}'
+                -d text="*${emoji} DEPLOYMENT FAILED* \
+                \n\n*Project*: ${env.JOB_NAME} \
+                \n*Build*: \\#${env.BUILD_NUMBER} \
+                \n*Error*: ${currentBuild.currentResult} \
+                \n*Duration*: ${buildDuration} \
+                \n*Timestamp*: ${timestamp}" \
+                -d parse_mode="Markdown" \
+                -d reply_markup='{"inline_keyboard":[[{"text":"Debug Logs","url":"${env.BUILD_URL}"}]]}'
             """
         }
     }
