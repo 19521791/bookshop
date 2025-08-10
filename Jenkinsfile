@@ -30,6 +30,7 @@ pipeline {
             steps {
                sshagent(['vps-ssh-key']) {
                     sh """
+                        export PATH=$PWD/vendor/bundle/ruby/3.1.0/bin:$PATH
                         bundle install
                         bundle exec cap ${DEPLOY_ENV} deploy
                     """
