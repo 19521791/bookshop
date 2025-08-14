@@ -12,7 +12,7 @@ pipeline {
         DEPLOY_ENV = "staging"
         TELEGRAM_TOKEN = credentials('telegram-bot-token')
         TELEGRAM_CHAT_ID = credentials('telegram-chat-id')
-        MAIL_RECIPIENTS = "toannguyenvan145@gmail.com"
+        MAIL_RECIPIENTS = credentials('mail-recipients')
     }
     stages {
         stage('Checkout') {
@@ -21,22 +21,24 @@ pipeline {
                           branches: [[name: '*/main']],
                           userRemoteConfigs: [[
                               url: 'https://github.com/19521791/bookshop',
-                              credentialsId: 'vps-ssh-key'
+                              credentialsId: 'github-ssh-key'
                           ]]
                 ])
             }
         }
         stage('Install dependencies') {
             steps {
-                sh 'bundle install --deployment --path vendor/bundle --without development test'
+                sh """
+                    export BUNDLE_PATH=vendor/bundle
+                    export PATH=$PWD/vendor/bundle/ruby/3.1.0/bin:$PATH
+                    bundle install --path vendor/bundle
+                """
             }
         }
         stage('Deploy') {
             steps {
                sshagent(['vps-ssh-key']) {
                     sh """
-                        export PATH=$PWD/vendor/bundle/ruby/3.1.0/bin:$PATH
-                        bundle install
                         bundle exec cap ${DEPLOY_ENV} deploy
                     """
                }
@@ -53,6 +55,7 @@ pipeline {
                 emoji = currentBuild.currentResult == 'SUCCESS' ? '✅' : '❌'
                 color = currentBuild.currentResult == 'SUCCESS' ? '#36a64f' : '#ff0000'
             }
+            cleanWs( deleteDirs: true )
         }
         success {
             mail to: "${MAIL_RECIPIENTS}",
@@ -107,11 +110,10 @@ pipeline {
                 -d text="*${emoji} DEPLOYMENT FAILED* \
                 \n\n*Project*: ${env.JOB_NAME} \
                 \n*Build*: \\#${env.BUILD_NUMBER} \
-                \n*Error*: ${currentBuild.currentResult} \
                 \n*Duration*: ${buildDuration} \
                 \n*Timestamp*: ${timestamp}" \
                 -d parse_mode="Markdown" \
-                -d reply_markup='{"inline_keyboard":[[{"text":"Debug Logs","url":"${env.BUILD_URL}"}]]}'
+                -d reply_markup='{"inline_keyboard":[[{"text":"View Build","url":"${env.BUILD_URL}"}]]}'
             """
         }
     }
