@@ -26,22 +26,39 @@ pipeline {
                 ])
             }
         }
-        stage('Install dependencies') {
+
+        stage('Setup Ruby') {
             steps {
-                sh """
-                    export BUNDLE_PATH=vendor/bundle
-                    export PATH=$PWD/vendor/bundle/ruby/3.1.0/bin:$PATH
-                    bundle install --path vendor/bundle
-                """
+                sh '''#!/bin/bash -l
+                export PATH="$HOME/.rbenv/bin:$PATH"
+                eval "$(rbenv init - bash)"
+                rbenv install -s 3.1.2
+                gem install bundler || true
+                '''
             }
         }
+
+        stage('Install dependencies') {
+            steps {
+                sh '''#!/bin/bash -l
+                    export PATH="$HOME/.rbenv/bin:$PATH"
+                    eval "$(rbenv init - bash)"
+
+                    bundle install --path vendor/bundle
+                '''
+            }
+        }
+
         stage('Deploy') {
             steps {
-               sshagent(['vps-ssh-key']) {
-                    sh """
+                sshagent(['vps-ssh-key']) {
+                    sh '''#!/bin/bash -l
+                        export PATH="$HOME/.rbenv/bin:$PATH"
+                        eval "$(rbenv init - bash)"
+
                         bundle exec cap ${DEPLOY_ENV} deploy
-                    """
-               }
+                    '''
+                }
             }
         }
     }
@@ -51,7 +68,6 @@ pipeline {
             script {
                 buildDuration = currentBuild.durationString.replace(' and counting', '')
                 timestamp = new Date().format("yyyy-MM-dd HH:mm:ss z")
-                
                 emoji = currentBuild.currentResult == 'SUCCESS' ? '✅' : '❌'
                 color = currentBuild.currentResult == 'SUCCESS' ? '#36a64f' : '#ff0000'
             }
